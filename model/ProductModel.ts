@@ -1,16 +1,11 @@
 import mongoose, { Schema } from "mongoose"
-import { ProductProsp } from "./ProductModel";
 import { PromotionProsp } from "./PromotionModel";
 
-const MenuSchema = new Schema({
+const ProductSchema = new Schema({
     name : {
         type: Schema.Types.String,
         required: true
     },
-    product : [{
-        type: Schema.Types.ObjectId,
-        required:true
-    }], // "]" -> permert de faire un tableau 
     price : {
         type: Schema.Types.Number,
         Required: true,
@@ -19,21 +14,19 @@ const MenuSchema = new Schema({
     promotion : {
         type: Schema.Types.ObjectId
     }
-
 }, {
     timestamps: true,
     versionKey: false
 }
 );
 
-export interface MenuProsp {
+export interface ProductProsp {
     name : string;
-    product: ProductProsp[];
     price: number;
     id: string;
     promotion? : PromotionProsp;
 }
 
-export type MenuDocument = MenuProsp & Document;
+export type ProductDocument = ProductProsp & Document;
 
-export const MenuModel = mongoose.model("menu", MenuSchema);
+export const ProductModel = mongoose.model("product", ProductSchema);
