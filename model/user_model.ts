@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose"
+import { RoleProsp } from "./roleModel";
 import { sessionProsp } from "./session_model";
 
 const UserSchema = new Schema({
@@ -13,8 +14,12 @@ const UserSchema = new Schema({
     },
     session : [{
         type: Schema.Types.ObjectId, 
-        ref:"Session"
+        ref:"session"
     }],
+    role : {
+        type: Schema.Types.ObjectId,
+        ref:"role"
+    }
 }, {
     timestamps: true,
     versionKey: false,
@@ -28,6 +33,7 @@ export interface UserProsp {
     password:string;
     sessions: string[] | sessionProsp[];
     id : string;
+    role : RoleProsp;
     
 }
 

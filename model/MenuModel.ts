@@ -17,12 +17,14 @@ const MenuSchema = new Schema({
         min:0 
     },
     promotion : {
-        type: Schema.Types.ObjectId
+        type: Schema.Types.ObjectId,
+        ref:"promotion"
     }
 
 }, {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
+    collection: "menu"
 }
 );
 

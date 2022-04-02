@@ -12,7 +12,8 @@ const PromotionSchema = new Schema({
     }
 }, {
     timestamps: true,
-    versionKey: false
+    versionKey: false,
+    collection : "promotion"
 }
 );
 
