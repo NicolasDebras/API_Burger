@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./dist/index.js",
     "build": "rmdir /S dist && npx tsc || npx tsc",
-    "flemme": "(rmdir /Q dist && npx tsc || npx tsc )&& node ./dist/index.js"
+    "flemme": "(rmdir /Q dist && npx tsc || npx tsc )&& node ./dist/index.js",
+    "build-linux": "rm -rf ./dist && tsc"
   },
   "repository": {
     "type": "git",
