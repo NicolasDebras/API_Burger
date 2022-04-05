@@ -21,23 +21,36 @@ export class RestaurantService {
         */
        const model = new RestaurantModel({
             name: restaurant.name,
-            Cordlat: restaurant.name,
-            Cordlong: restaurant.name,
-            user : restaurant.name,
+            Cordlat: restaurant.Cordlat,
+            Cordlong: restaurant.Cordlong,
+            user : restaurant.user,
        })
        return model.save();
     }
     public async getById(idRestaurant: string) {
         return RestaurantModel.findById(idRestaurant).exec();
     }
+
+    public async getAll() {
+        return RestaurantModel.find().exec();
+    }
     
     public async deletebyId(idRestaurant: string) {
         const res = await RestaurantModel.deleteOne({id:idRestaurant}).exec();
         return res.deletedCount === 1;
     }
-    public async Update(idRestaurant: string, props: RestaurantService) {
-        return RestaurantModel.findById(idRestaurant).exec();
+    public async Update(idRestaurant: string, props: RestaurantProsp) {
+        const restaurant = await this.getById(idRestaurant);
 
-        //a finir
+        if (! restaurant == null) {
+            return null;
+        }
+        if (restaurant.name !==  undefined) {
+            restaurant.name = props.name;
+        }
+        //a finir condition
+        
+        const res = await restaurant.save()
+        return res;
     }
 }
