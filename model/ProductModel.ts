@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose"
+import mongoose, { Schema, Document } from "mongoose"
 import { PromotionProsp } from "./PromotionModel";
 
 const ProductSchema = new Schema({
@@ -25,7 +25,7 @@ const ProductSchema = new Schema({
 export interface ProductProsp {
     name : string;
     price: number;
-    id: string;
+    _id?: string;
     promotion? : PromotionProsp;
 }
 
