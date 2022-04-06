@@ -34,6 +34,8 @@ function startServer() {
         app.use('/promotion', promotionController.buildRoutes());
         const menuController = new MenuController_1.MenuController();
         app.use('/menu', menuController.buildRoutes());
+        const commandeController = new Controller_1.CommandeController();
+        app.use('/commande', commandeController.buildRoutes());
         app.listen(process.env.PORT, function () {
             console.log("Server listening on port " + process.env.PORT);
         });

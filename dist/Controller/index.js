@@ -15,4 +15,8 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("../Controller/ProductController"), exports);
+__exportStar(require("../Controller/CommandeController"), exports);
+__exportStar(require("../Controller/PromotionController"), exports);
+__exportStar(require("../Controller/MenuController"), exports);
+__exportStar(require("../Controller/RestaurantService"), exports);
 //# sourceMappingURL=index.js.map

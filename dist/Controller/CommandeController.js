@@ -12,25 +12,26 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MenuController = void 0;
+exports.CommandeController = void 0;
 const express_1 = __importDefault(require("express"));
-const Menuservice_1 = require("../service/Menuservice");
-class MenuController {
-    createMenu(req, res) {
+const service_1 = require("../service");
+class CommandeController {
+    createCommande(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const menuBody = req.body;
-            if (!menuBody.name || !menuBody.product || !menuBody.price) {
+            const commandeBody = req.body;
+            if (!commandeBody.name) {
                 res.status(400).end();
                 return;
             }
             try {
-                const menu = yield Menuservice_1.MenuService.getInstance().createMenu({
-                    name: menuBody.name,
-                    price: menuBody.price,
-                    product: menuBody.product,
-                    promotion: menuBody.promotion
+                const commande = yield service_1.CommandeService.getInstance().createCommande({
+                    name: commandeBody.name,
+                    product: commandeBody.product,
+                    menu: commandeBody.menu,
+                    price: commandeBody.price,
+                    promotion: commandeBody.promotion
                 });
-                res.json(menu);
+                res.json(commande);
             }
             catch (err) {
                 res.status(400).end();
@@ -38,21 +39,21 @@ class MenuController {
             }
         });
     }
-    getAllMenu(req, res) {
+    getAllCommande(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            const promotions = yield Menuservice_1.MenuService.getInstance().getAll();
-            res.json(promotions);
+            const commande = yield service_1.CommandeService.getInstance().getAll();
+            res.json(commande);
         });
     }
-    getMenu(req, res) {
+    getCommande(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const menu = yield Menuservice_1.MenuService.getInstance().getById(req.params.menu_id);
-                if (menu === null) {
+                const commande = yield service_1.CommandeService.getInstance().getById(req.params.commande_id);
+                if (commande === null) {
                     res.status(404).end();
                     return;
                 }
-                res.json(menu);
+                res.json(commande);
             }
             catch (err) {
                 res.status(400).end();
@@ -60,10 +61,10 @@ class MenuController {
             }
         });
     }
-    deleteMenu(req, res) {
+    deleteCommande(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const success = yield Menuservice_1.MenuService.getInstance().deleteById(req.params.menu_id);
+                const success = yield service_1.CommandeService.getInstance().deleteById(req.params.commande_id);
                 if (success) {
                     res.status(204).end();
                 }
@@ -76,16 +77,16 @@ class MenuController {
             }
         });
     }
-    updateMenu(req, res) {
+    updateCommande(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const menu = yield Menuservice_1.MenuService.getInstance()
-                    .updateById(req.params.menu_id, req.body);
-                if (!menu) {
+                const commande = yield service_1.CommandeService.getInstance()
+                    .updateById(req.params.commande_id, req.body);
+                if (!commande) {
                     res.status(404).end();
                     return;
                 }
-                res.json(menu);
+                res.json(commande);
             }
             catch (err) {
                 res.status(400).end();
@@ -94,13 +95,13 @@ class MenuController {
     }
     buildRoutes() {
         const routeur = express_1.default.Router();
-        routeur.post('/', express_1.default.json(), this.createMenu.bind(this));
-        routeur.get('/', this.getAllMenu.bind(this));
-        routeur.get('/:menu_id', this.getMenu.bind(this));
-        routeur.delete('/:menu_id', this.deleteMenu.bind(this));
-        routeur.put('/:menu_id', express_1.default.json(), this.updateMenu.bind(this));
+        routeur.post('/', express_1.default.json(), this.createCommande.bind(this));
+        routeur.get('/', this.getAllCommande.bind(this));
+        routeur.get('/:commande_id', this.getCommande.bind(this));
+        routeur.delete('/:commande_id', this.deleteCommande.bind(this));
+        routeur.put('/:commande_id', express_1.default.json(), this.updateCommande.bind(this));
         return routeur;
     }
 }
-exports.MenuController = MenuController;
-//# sourceMappingURL=MenuController.js.map
+exports.CommandeController = CommandeController;
+//# sourceMappingURL=CommandeController.js.map

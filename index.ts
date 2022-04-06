@@ -3,7 +3,7 @@ config();
 
 import express from "express";
 import mongoose, {Mongoose} from "mongoose";
-import {ProductController} from "./Controller";
+import {CommandeController, ProductController} from "./Controller";
 import {PromotionController} from "./Controller/PromotionController";
 import {MenuController} from "./Controller/MenuController";
 async function startServer(): Promise<void> {
@@ -24,6 +24,9 @@ async function startServer(): Promise<void> {
 
     const menuController = new MenuController();
     app.use('/menu', menuController.buildRoutes());
+
+    const commandeController = new CommandeController();
+    app.use('/commande', commandeController.buildRoutes());
 
     app.listen(process.env.PORT, function (){
         console.log("Server listening on port " + process.env.PORT);

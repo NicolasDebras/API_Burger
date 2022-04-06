@@ -15,7 +15,7 @@ export class MenuService {
 
     }
 
-    public async createMenu(props: { product: any; price: any; name: any; promotion: any }): Promise<MenuDocument>{
+    public async createMenu(props: MenuProsp): Promise<MenuDocument>{
         const model = new MenuModel(props);
         const menu = await model.save();
         return menu;
@@ -51,6 +51,7 @@ export class MenuService {
         if (props.product !== undefined){
             menu.product = props.product;
         }
+
         const res = await menu.save();
         return res;
     }

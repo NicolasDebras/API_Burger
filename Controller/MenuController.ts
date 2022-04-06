@@ -1,13 +1,13 @@
 import express, {Router, Request, Response} from "express";
 import {MenuService} from "../service/Menuservice";
-import {PromotionService} from "../service";
+
 
 
 export class MenuController {
 
     async createMenu(req: Request, res: Response){
         const menuBody = req.body;
-        if (!menuBody.name || !menuBody.product || !menuBody.product){
+        if (!menuBody.name || !menuBody.product || !menuBody.price){
             res.status(400).end();
             return;
         }
