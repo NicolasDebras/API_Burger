@@ -23,7 +23,7 @@ const ProductSchema = new Schema({
 );
 
 export interface ProductProsp {
-    name : string;
+    name: string;
     price: number;
     _id?: string;
     promotion? : PromotionProsp;

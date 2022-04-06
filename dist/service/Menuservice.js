@@ -20,16 +20,49 @@ class MenuService {
         }
         return MenuService.instance;
     }
-    createMenu(prop) {
+    createMenu(props) {
         return __awaiter(this, void 0, void 0, function* () {
-            const model = new MenuModel_1.MenuModel();
+            const model = new MenuModel_1.MenuModel(props);
             const menu = yield model.save();
             return menu;
+        });
+    }
+    getAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return MenuModel_1.MenuModel.find().exec();
         });
     }
     getById(idMenu) {
         return __awaiter(this, void 0, void 0, function* () {
             return MenuModel_1.MenuModel.findById(idMenu).exec();
+        });
+    }
+    deleteById(menuId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const res = yield MenuModel_1.MenuModel.deleteOne({ _id: menuId }).exec();
+            return res.deletedCount === 1;
+        });
+    }
+    updateById(menuId, props) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const menu = yield this.getById(menuId);
+            if (!menu) {
+                return null;
+            }
+            if (props.name !== undefined) {
+                menu.name = props.name;
+            }
+            if (props.price !== undefined) {
+                menu.price = props.price;
+            }
+            if (props.promotion !== undefined) {
+                menu.promotion = props.promotion;
+            }
+            if (props.product !== undefined) {
+                menu.product = props.product;
+            }
+            const res = yield menu.save();
+            return res;
         });
     }
 }

@@ -5,6 +5,7 @@ import express from "express";
 import mongoose, {Mongoose} from "mongoose";
 import {ProductController} from "./Controller";
 import {PromotionController} from "./Controller/PromotionController";
+import {MenuController} from "./Controller/MenuController";
 async function startServer(): Promise<void> {
     const m : Mongoose = await mongoose.connect(process.env.MONGO_URI as string, {
         auth: {
@@ -20,6 +21,10 @@ async function startServer(): Promise<void> {
 
     const promotionController = new PromotionController();
     app.use('/promotion', promotionController.buildRoutes());
+
+    const menuController = new MenuController();
+    app.use('/menu', menuController.buildRoutes());
+
     app.listen(process.env.PORT, function (){
         console.log("Server listening on port " + process.env.PORT);
     });

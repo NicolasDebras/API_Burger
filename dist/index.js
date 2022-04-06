@@ -18,6 +18,7 @@ const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Controller_1 = require("./Controller");
 const PromotionController_1 = require("./Controller/PromotionController");
+const MenuController_1 = require("./Controller/MenuController");
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const m = yield mongoose_1.default.connect(process.env.MONGO_URI, {
@@ -31,6 +32,8 @@ function startServer() {
         app.use('/product', productController.buildRoutes());
         const promotionController = new PromotionController_1.PromotionController();
         app.use('/promotion', promotionController.buildRoutes());
+        const menuController = new MenuController_1.MenuController();
+        app.use('/menu', menuController.buildRoutes());
         app.listen(process.env.PORT, function () {
             console.log("Server listening on port " + process.env.PORT);
         });
