@@ -5,7 +5,7 @@ import {MenuProsp} from "./MenuModel";
 
 
 const CommandeSchema = new Schema({
-        name : {
+        nbrCommande: {
             type: Schema.Types.String,
             required: true
         },
@@ -35,12 +35,12 @@ const CommandeSchema = new Schema({
 );
 
 export interface CommandeProsp {
-    name: string;
     product?: ProductProsp[];
     menu?: MenuProsp[];
     price?: number;
     _id?: string;
     promotion? : PromotionProsp;
+    nbrCommande?: string;
 }
 
 export type CommandeDocument = CommandeProsp & Document;

@@ -22,6 +22,10 @@ class CommandeService {
     }
     createCommande(props) {
         return __awaiter(this, void 0, void 0, function* () {
+            let max = 7000000;
+            let min = 1;
+            let nbr = (Math.random() * (max - min) + min) | 0;
+            props.nbrCommande = "CB" + nbr;
             const model = new model_1.CommandeModel(props);
             const commande = yield model.save();
             return commande;
@@ -49,8 +53,8 @@ class CommandeService {
             if (!commande) {
                 return null;
             }
-            if (props.name !== undefined) {
-                commande.name = props.name;
+            if (props.nbrCommande !== undefined) {
+                commande.nbrCommande = props.nbrCommande;
             }
             if (props.menu !== undefined) {
                 commande.menu = props.menu;
@@ -64,11 +68,9 @@ class CommandeService {
             if (props.price !== undefined) {
                 commande.price = props.price;
             }
-            /*
-            if (props.price !== undefined){
+            if (props.price !== undefined) {
                 commande.price = props.price;
-             }
-             */
+            }
             const res = yield commande.save();
             return res;
         });

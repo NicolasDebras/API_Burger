@@ -16,6 +16,10 @@ export class CommandeService{
     }
 
     public async createCommande(props: CommandeProsp): Promise<CommandeDocument>{
+        let max = 7000000;
+        let min = 1;
+        let nbr = (Math.random() * (max - min) + min) | 0 ;
+        props.nbrCommande = "CB" + nbr;
         const model = new CommandeModel(props);
         const commande = await model.save();
         return commande;
@@ -39,8 +43,8 @@ export class CommandeService{
         if(!commande){
             return null;
         }
-        if (props.name !== undefined){
-            commande.name = props.name;
+        if (props.nbrCommande !== undefined){
+            commande.nbrCommande = props.nbrCommande;
         }
         if (props.menu !== undefined){
             commande.menu = props.menu;
@@ -54,11 +58,9 @@ export class CommandeService{
         if (props.price !== undefined){
             commande.price = props.price;
         }
-        /*
         if (props.price !== undefined){
             commande.price = props.price;
-         }
-         */
+        }
         const res = await commande.save();
         return res;
     }

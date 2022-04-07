@@ -26,7 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandeModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
 const CommandeSchema = new mongoose_1.Schema({
-    name: {
+    nbrCommande: {
         type: mongoose_1.Schema.Types.String,
         required: true
     },

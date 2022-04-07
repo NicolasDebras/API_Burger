@@ -5,13 +5,14 @@ import {CommandeService} from "../service";
 export class CommandeController{
     async createCommande(req: Request, res: Response){
         const commandeBody = req.body;
-        if (!commandeBody.name ){
+        if (!commandeBody === null ){
             res.status(400).end();
             return;
         }
         try {
+
             const commande = await CommandeService.getInstance().createCommande({
-                name: commandeBody.name,
+                nbrCommande: commandeBody.nbrCommande,
                 product: commandeBody.product,
                 menu: commandeBody.menu,
                 price: commandeBody.price,
