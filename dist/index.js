@@ -17,8 +17,6 @@ const dotenv_1 = require("dotenv");
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Controller_1 = require("./Controller");
-const PromotionController_1 = require("./Controller/PromotionController");
-const MenuController_1 = require("./Controller/MenuController");
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const m = yield mongoose_1.default.connect(process.env.MONGO_URI, {
@@ -30,9 +28,9 @@ function startServer() {
         const app = (0, express_1.default)();
         const productController = new Controller_1.ProductController();
         app.use('/product', productController.buildRoutes());
-        const promotionController = new PromotionController_1.PromotionController();
+        const promotionController = new Controller_1.PromotionController();
         app.use('/promotion', promotionController.buildRoutes());
-        const menuController = new MenuController_1.MenuController();
+        const menuController = new Controller_1.MenuController();
         app.use('/menu', menuController.buildRoutes());
         const commandeController = new Controller_1.CommandeController();
         app.use('/commande', commandeController.buildRoutes());

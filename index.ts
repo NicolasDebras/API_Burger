@@ -3,9 +3,7 @@ config();
 
 import express from "express";
 import mongoose, {Mongoose} from "mongoose";
-import {CommandeController, ProductController} from "./Controller";
-import {PromotionController} from "./Controller/PromotionController";
-import {MenuController} from "./Controller/MenuController";
+import {CommandeController, ProductController, PromotionController, MenuController} from "./Controller";
 async function startServer(): Promise<void> {
     const m : Mongoose = await mongoose.connect(process.env.MONGO_URI as string, {
         auth: {
