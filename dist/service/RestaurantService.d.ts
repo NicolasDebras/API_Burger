@@ -5,6 +5,7 @@ export declare class RestaurantService {
     private constructor();
     createRestaurant(restaurant: Partial<RestaurantProsp>): Promise<RestaurantDocument>;
     getById(idRestaurant: string): Promise<any>;
+    getAll(): Promise<any[]>;
     deletebyId(idRestaurant: string): Promise<boolean>;
-    Update(idRestaurant: string, props: RestaurantService): Promise<any>;
+    Update(idRestaurant: string, props: RestaurantProsp): Promise<any>;
 }

@@ -16,6 +16,7 @@ const dotenv_1 = require("dotenv");
 (0, dotenv_1.config)();
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const RestaurantController_1 = require("./Controller/RestaurantController");
 const Controller_1 = require("./Controller");
 const PromotionController_1 = require("./Controller/PromotionController");
 const MenuController_1 = require("./Controller/MenuController");
@@ -36,6 +37,8 @@ function startServer() {
         app.use('/menu', menuController.buildRoutes());
         const commandeController = new Controller_1.CommandeController();
         app.use('/commande', commandeController.buildRoutes());
+        const restaurantController = new RestaurantController_1.RestaurantController();
+        app.use('/rest', restaurantController.buildRoutes());
         app.listen(process.env.PORT, function () {
             console.log("Server listening on port " + process.env.PORT);
         });

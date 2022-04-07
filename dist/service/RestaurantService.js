@@ -27,9 +27,9 @@ class RestaurantService {
             */
             const model = new RestaurantModel_1.RestaurantModel({
                 name: restaurant.name,
-                Cordlat: restaurant.name,
-                Cordlong: restaurant.name,
-                user: restaurant.name,
+                Cordlat: restaurant.Cordlat,
+                Cordlong: restaurant.Cordlong,
+                user: restaurant.user,
             });
             return model.save();
         });
@@ -37,6 +37,11 @@ class RestaurantService {
     getById(idRestaurant) {
         return __awaiter(this, void 0, void 0, function* () {
             return RestaurantModel_1.RestaurantModel.findById(idRestaurant).exec();
+        });
+    }
+    getAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return RestaurantModel_1.RestaurantModel.find().exec();
         });
     }
     deletebyId(idRestaurant) {
@@ -47,8 +52,16 @@ class RestaurantService {
     }
     Update(idRestaurant, props) {
         return __awaiter(this, void 0, void 0, function* () {
-            return RestaurantModel_1.RestaurantModel.findById(idRestaurant).exec();
-            //a finir
+            const restaurant = yield this.getById(idRestaurant);
+            if (!restaurant == null) {
+                return null;
+            }
+            if (restaurant.name !== undefined) {
+                restaurant.name = props.name;
+            }
+            //a finir condition
+            const res = yield restaurant.save();
+            return res;
         });
     }
 }
