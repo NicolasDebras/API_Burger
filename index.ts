@@ -1,32 +1,41 @@
 import {config} from "dotenv";
 config();
-import express from 'express';
-import mongoose from "mongoose";
-import {Mongoose} from "mongoose";
+import express from "express";
+import mongoose, {Mongoose} from "mongoose";
 import { RestaurantController } from "./Controller/RestaurantController";
 import { RestaurantModel } from "./model/RestaurantModel";
+import {CommandeController, ProductController} from "./Controller";
+import {PromotionController} from "./Controller/PromotionController";
+import {MenuController} from "./Controller/MenuController";
+async function startServer(): Promise<void> {
+    const m : Mongoose = await mongoose.connect(process.env.MONGO_URI as string, {
+        auth: {
+            username: process.env.MONGO_USER as string,
+            password: process.env.MONGO_PASSWORD as string
 
-
-
-async function start_serveur(): Promise<void>{
-
-    const m : Mongoose = await mongoose.connect(process.env.MONGO_URL as string, {
-        auth : {
-            username : process.env.MONDO_USER,
-            password : process.env.MONDO_PASSWORD
         }
     });
-
-
     const app = express();
+
+    const productController = new ProductController();
+    app.use('/product', productController.buildRoutes());
+
+    const promotionController = new PromotionController();
+    app.use('/promotion', promotionController.buildRoutes());
+
+    const menuController = new MenuController();
+    app.use('/menu', menuController.buildRoutes());
+
+    const commandeController = new CommandeController();
+    app.use('/commande', commandeController.buildRoutes());
 
     const restaurantController = new RestaurantController();
     app.use('/rest', restaurantController.buildRoutes());
 
-    app.listen(process.env.PORT, function(){
-        console.log("Server " + process.env.PORT)
-    })
-
+    app.listen(process.env.PORT, function (){
+        console.log("Server listening on port " + process.env.PORT);
+    });
 }
 
-start_serveur().catch(console.error);
+startServer().catch(console.error);
+

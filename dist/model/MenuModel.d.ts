@@ -1,11 +1,11 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { ProductProsp } from "./ProductModel";
 import { PromotionProsp } from "./PromotionModel";
 export interface MenuProsp {
     name: string;
     product: ProductProsp[];
     price: number;
-    id: string;
+    _id?: string;
     promotion?: PromotionProsp;
 }
 export declare type MenuDocument = MenuProsp & Document;
