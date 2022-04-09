@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose"
-import { UserProsp } from "./user_model";
+import { UserProps } from "./user_model";
 
 const RestaurantSchema = new Schema({
     name : {
@@ -29,7 +29,7 @@ export interface RestaurantProsp {
     name : string;
     Cordlat : number;
     Cordlong : number;
-    user : UserProsp[];
+    user : UserProps[];
     id :string;
 }
 

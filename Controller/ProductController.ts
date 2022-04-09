@@ -1,5 +1,6 @@
 import express, {Router, Request, Response} from "express";
 import {ProductService} from "../service/ProductService";
+import {checkUserConnected} from "../middleware";
 
 export class  ProductController {
 
@@ -70,6 +71,7 @@ export class  ProductController {
 
     buildRoutes(): Router {
         const routeur = express.Router();
+        routeur.use(checkUserConnected());
         routeur.post('/', express.json(), this.createProduct.bind(this));
         routeur.get('/', this.getAllProducts.bind(this));
         routeur.get('/:product_id', this.getProduct.bind(this));

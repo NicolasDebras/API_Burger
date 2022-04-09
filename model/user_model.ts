@@ -1,42 +1,34 @@
-import mongoose, { Schema } from "mongoose"
-import { RoleProsp } from "./roleModel";
-import { sessionProsp } from "./session_model";
+import mongoose, {Schema, Document} from "mongoose";
+import {SessionProps} from "./session_model";
 
-const UserSchema = new Schema({
-    login : {
+const userSchema = new Schema({
+    login: {
         type: Schema.Types.String,
-        required: true,
-        unique: true
+        required: true
     },
-    password : {
+    password: {
         type: Schema.Types.String,
-        Required: true,
+        required: true
     },
-    session : [{
-        type: Schema.Types.ObjectId, 
-        ref:"session"
-    }],
-    role : {
-        type: Schema.Types.ObjectId,
-        ref:"role"
-    }
+    sessions: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Session"
+        }
+    ]
+
 }, {
+    collection: "users",
     timestamps: true,
-    versionKey: false,
-    collection: "user"
-}
-);
+    versionKey: false
+});
 
-export interface UserProsp {
-
-    login:string;
-    password:string;
-    sessions: string[] | sessionProsp[];
-    id : string;
-    role : RoleProsp;
-    
+export interface UserProps {
+    _id: string;
+    login: string;
+    password: string;
+    sessions: string[] | SessionProps[];
 }
 
-export type UserDocument = UserProsp & Document;
-
-export const UserModel = mongoose.model("user", UserSchema);
+export type UserDocument = UserProps & Document;
+export const UserModel = mongoose.model("User", userSchema);

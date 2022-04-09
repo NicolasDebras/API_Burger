@@ -23,25 +23,24 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sessionModel = void 0;
+exports.SessionModel = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
-const SessionSchema = new mongoose_1.Schema({
+const sessionScema = new mongoose_1.Schema({
     user: {
         type: mongoose_1.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
+        ref: "User"
     },
-    platfrom: {
+    platform: {
         type: mongoose_1.Schema.Types.String,
-        Required: true
+        required: true
     },
     expiration: {
         type: mongoose_1.Schema.Types.Date
-    },
+    }
 }, {
+    collection: "users",
     timestamps: true,
-    versionKey: false,
-    collection: "session"
+    versionKey: false
 });
-exports.sessionModel = mongoose_1.default.model("session", SessionSchema);
+exports.SessionModel = mongoose_1.default.model("Session", sessionScema);
 //# sourceMappingURL=session_model.js.map

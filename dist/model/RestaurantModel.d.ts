@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
-import { UserProsp } from "./user_model";
+import { UserProps } from "./user_model";
 export interface RestaurantProsp {
     name: string;
     Cordlat: number;
     Cordlong: number;
-    user: UserProsp[];
+    user: UserProps[];
     id: string;
 }
 export declare type RestaurantDocument = RestaurantProsp & Document;

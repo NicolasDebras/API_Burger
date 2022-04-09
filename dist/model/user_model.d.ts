@@ -1,12 +1,10 @@
-import mongoose from "mongoose";
-import { RoleProsp } from "./roleModel";
-import { sessionProsp } from "./session_model";
-export interface UserProsp {
+import mongoose, { Document } from "mongoose";
+import { SessionProps } from "./session_model";
+export interface UserProps {
+    _id: string;
     login: string;
     password: string;
-    sessions: string[] | sessionProsp[];
-    id: string;
-    role: RoleProsp;
+    sessions: string[] | SessionProps[];
 }
-export declare type UserDocument = UserProsp & Document;
+export declare type UserDocument = UserProps & Document;
 export declare const UserModel: mongoose.Model<any, {}, {}, {}>;
