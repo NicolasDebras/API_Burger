@@ -34,6 +34,10 @@ const userSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.String,
         required: true
     },
+    role: {
+        type: mongoose_1.Schema.Types.String,
+        required: true
+    },
     sessions: [
         {
             type: mongoose_1.Schema.Types.ObjectId,

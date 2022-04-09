@@ -14,6 +14,7 @@ export function checkUserRole(roles : string[] = []): RequestHandler {
     return async function (req: Request, res: Response, next) {
         const authorization = req.headers['authorization'];
         if (authorization === undefined) {
+
             res.status(401).end();
             return;
         }
@@ -21,16 +22,18 @@ export function checkUserRole(roles : string[] = []): RequestHandler {
         const token = parts[1];
         try {
             const user = await AuthService.getInstance().getUserFrom(token);
-            const userRole : string = req.body.role;
+            const userRole : string = user?.role!;
             if (user === null) {
                 res.status(401).end();
+                return;
             }
             if(roles.length && !roles.includes(userRole)){
                 res.status(401).end();
+                return;
             }
             next();
         }
-        catch {
+        catch{
             res.status(401).end();
             return;
         }

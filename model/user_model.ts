@@ -1,4 +1,5 @@
 import mongoose, {Schema, Document} from "mongoose";
+import { StringLiteralType } from "typescript";
 import {SessionProps} from "./session_model";
 
 const userSchema = new Schema({
@@ -7,6 +8,10 @@ const userSchema = new Schema({
         required: true
     },
     password: {
+        type: Schema.Types.String,
+        required: true
+    },
+    role:{
         type: Schema.Types.String,
         required: true
     },
@@ -27,6 +32,7 @@ export interface UserProps {
     _id: string;
     login: string;
     password: string;
+    role : string;
     sessions: string[] | SessionProps[];
 }
 

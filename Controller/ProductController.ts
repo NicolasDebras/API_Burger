@@ -1,6 +1,7 @@
 import express, {Router, Request, Response} from "express";
 import {ProductService} from "../service/ProductService";
 import {checkUserConnected} from "../middleware";
+import { checkUserRole } from "../middleware";
 
 export class  ProductController {
 
@@ -70,10 +71,11 @@ export class  ProductController {
     }
 
     buildRoutes(): Router {
+        
         const routeur = express.Router();
         routeur.use(checkUserConnected());
         routeur.post('/', express.json(), this.createProduct.bind(this));
-        routeur.get('/', this.getAllProducts.bind(this));
+        routeur.get('/', checkUserRole(["admin"]), this.getAllProducts.bind(this));
         routeur.get('/:product_id', this.getProduct.bind(this));
         routeur.delete('/:product_id', this.deleteProduct.bind(this));
         routeur.put('/:product_id', express.json(),  this.updateProduct.bind(this));

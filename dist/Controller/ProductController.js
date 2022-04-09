@@ -16,6 +16,7 @@ exports.ProductController = void 0;
 const express_1 = __importDefault(require("express"));
 const ProductService_1 = require("../service/ProductService");
 const middleware_1 = require("../middleware");
+const middleware_2 = require("../middleware");
 class ProductController {
     createProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -96,7 +97,7 @@ class ProductController {
         const routeur = express_1.default.Router();
         routeur.use((0, middleware_1.checkUserConnected)());
         routeur.post('/', express_1.default.json(), this.createProduct.bind(this));
-        routeur.get('/', this.getAllProducts.bind(this));
+        routeur.get('/', (0, middleware_2.checkUserRole)(["admin"]), this.getAllProducts.bind(this));
         routeur.get('/:product_id', this.getProduct.bind(this));
         routeur.delete('/:product_id', this.deleteProduct.bind(this));
         routeur.put('/:product_id', express_1.default.json(), this.updateProduct.bind(this));

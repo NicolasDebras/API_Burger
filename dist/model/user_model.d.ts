@@ -4,6 +4,7 @@ export interface UserProps {
     _id: string;
     login: string;
     password: string;
+    role: string;
     sessions: string[] | SessionProps[];
 }
 export declare type UserDocument = UserProps & Document;
