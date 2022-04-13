@@ -12,12 +12,12 @@ async function startServer(): Promise<void> {
 
     await mongoose.connect(
         `${process.env.MONGO_URI}`,
-        /*{
+        {
             auth: {
                 username: process.env.MONGO_USER,
                 password: process.env.MONGO_PWD
             }
-        }*/
+        }
     );
     const app = express();
 

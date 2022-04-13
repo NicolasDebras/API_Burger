@@ -2,7 +2,8 @@ import express,{ Router, Request,  Response} from "express";
 import {Mongoose} from "mongoose";
 import { RestaurantDocument } from "../model/RestaurantModel";
 import { RestaurantService } from "../service/RestaurantService";
-
+import {checkUserConnected} from "../middleware";
+import { checkUserRole } from "../middleware";
 export class RestaurantController {
 
     async CreateRestaurant(req: Request, res: Response) {
@@ -73,6 +74,7 @@ export class RestaurantController {
 
     buildRoutes() : Router {
         const router = express.Router();
+        router.use(checkUserConnected());
         router.post('/', express.json(), this.CreateRestaurant.bind(this))
         router.get('/find/:Restaurant_id',express.json(), this.getRestaurant.bind(this))
         router.get('/all/',express.json(), this.getAllRestaurant.bind(this))
