@@ -74,7 +74,7 @@ export class CommandeController{
 
     buildRoutes(): Router {
         const routeur = express.Router();
-        routeur.use(checkUserConnected());
+        //routeur.use(checkUserConnected());
         routeur.post('/', express.json(), this.createCommande.bind(this));
         routeur.get('/', this.getAllCommande.bind(this));
         routeur.get('/:commande_id', this.getCommande.bind(this));

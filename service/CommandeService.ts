@@ -1,4 +1,6 @@
-import {CommandeDocument, CommandeModel, CommandeProsp, MenuDocument, MenuModel, MenuProsp} from "../model";
+
+import {ProductService} from "./ProductService";
+import {CommandeDocument, CommandeModel, CommandeProsp} from "../model";
 
 
 export class CommandeService{
@@ -20,9 +22,48 @@ export class CommandeService{
         let min = 1;
         let nbr = (Math.random() * (max - min) + min) | 0 ;
         props.nbrCommande = "CB" + nbr;
+        props.price = await this.priceCommande(props);
         const model = new CommandeModel(props);
         const commande = await model.save();
         return commande;
+    }
+
+    async priceCommande(props: CommandeProsp): Promise<number>{
+        let i: number;
+        let products = props.product;
+        let menus = props.menu;
+        let price: number ;
+        price = 0;
+        if( products !== undefined){
+            for(i=0; i<products?.length; i++){
+                let product = String(products[i]);
+                const product1 = await ProductService.getInstance().getById(product);
+                if (product1) {
+                    if (product1.promotion?.percentage !== undefined){
+                        price = price + product1.price * 100 / product1?.promotion.percentage;
+                    }else{
+                        price = price + product1.price * 100 ;
+                    }
+                }
+                console.log(price);
+            }
+        }
+        if( menus !== undefined){
+            for(i=0; i<menus?.length; i++){
+                let menu = String(menus[i]);
+                const menu1 = await ProductService.getInstance().getById(menu);
+                if (menu1) {
+                    if (menu1.promotion?.percentage !== undefined){
+                        price = price + menu1.price * 100 / menu1?.promotion.percentage;
+                    }else{
+                        price = price + menu1.price * 100 ;
+                    }
+                }
+                console.log(price);
+            }
+        }
+        return price;
+
     }
 
     async getAll(): Promise<CommandeDocument[]> {

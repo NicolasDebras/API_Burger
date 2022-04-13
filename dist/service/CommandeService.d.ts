@@ -4,6 +4,7 @@ export declare class CommandeService {
     static getInstance(): CommandeService;
     private constructor();
     createCommande(props: CommandeProsp): Promise<CommandeDocument>;
+    priceCommande(props: CommandeProsp): Promise<number>;
     getAll(): Promise<CommandeDocument[]>;
     getById(idCommande: string): Promise<any>;
     deleteById(commandeId: string): Promise<boolean>;

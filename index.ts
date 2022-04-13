@@ -10,15 +10,13 @@ import {MenuController} from "./Controller/MenuController";
 import { AuthController } from './Controller/auth.controller';
 async function startServer(): Promise<void> {
 
-    await mongoose.connect(
-        `${process.env.MONGO_URI}`,
-        {
-            auth: {
-                username: process.env.MONGO_USER,
-                password: process.env.MONGO_PWD
-            }
+    const m : Mongoose = await mongoose.connect(process.env.MONGO_URI as string, {
+        auth: {
+            username: process.env.MONGO_USER as string,
+            password: process.env.MONGO_PASSWORD as string
+
         }
-    );
+    });
     const app = express();
 
     const productController = new ProductController();

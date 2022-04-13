@@ -97,6 +97,7 @@ class ProductController {
         const routeur = express_1.default.Router();
         routeur.use((0, middleware_1.checkUserConnected)());
         routeur.post('/', express_1.default.json(), this.createProduct.bind(this));
+        //Exemple pour protéger avec un rôle : 
         routeur.get('/', (0, middleware_2.checkUserRole)(["admin"]), this.getAllProducts.bind(this));
         routeur.get('/:product_id', this.getProduct.bind(this));
         routeur.delete('/:product_id', this.deleteProduct.bind(this));

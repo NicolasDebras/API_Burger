@@ -95,6 +95,7 @@ class CommandeController {
     }
     buildRoutes() {
         const routeur = express_1.default.Router();
+        //routeur.use(checkUserConnected());
         routeur.post('/', express_1.default.json(), this.createCommande.bind(this));
         routeur.get('/', this.getAllCommande.bind(this));
         routeur.get('/:commande_id', this.getCommande.bind(this));
