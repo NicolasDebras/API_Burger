@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandeService = void 0;
 const ProductService_1 = require("./ProductService");
 const model_1 = require("../model");
+const PromotionService_1 = require("./PromotionService");
+const Menuservice_1 = require("./Menuservice");
 class CommandeService {
     constructor() {
     }
@@ -46,29 +48,29 @@ class CommandeService {
                     let product = String(products[i]);
                     const product1 = yield ProductService_1.ProductService.getInstance().getById(product);
                     if (product1) {
-                        if (((_a = product1.promotion) === null || _a === void 0 ? void 0 : _a.percentage) !== undefined) {
-                            price = price + product1.price * 100 / (product1 === null || product1 === void 0 ? void 0 : product1.promotion.percentage);
+                        const promotion1 = yield PromotionService_1.PromotionService.getInstance().getById(String((_a = product1.promotion) === null || _a === void 0 ? void 0 : _a._id));
+                        if ((promotion1 === null || promotion1 === void 0 ? void 0 : promotion1.percentage) !== undefined) {
+                            price = price + (product1.price - product1.price * (promotion1 === null || promotion1 === void 0 ? void 0 : promotion1.percentage) / 100);
                         }
                         else {
-                            price = price + product1.price * 100;
+                            price = price + product1.price;
                         }
                     }
-                    console.log(price);
                 }
             }
             if (menus !== undefined) {
                 for (i = 0; i < (menus === null || menus === void 0 ? void 0 : menus.length); i++) {
                     let menu = String(menus[i]);
-                    const menu1 = yield ProductService_1.ProductService.getInstance().getById(menu);
-                    if (menu1) {
-                        if (((_b = menu1.promotion) === null || _b === void 0 ? void 0 : _b.percentage) !== undefined) {
-                            price = price + menu1.price * 100 / (menu1 === null || menu1 === void 0 ? void 0 : menu1.promotion.percentage);
+                    const menu1 = yield Menuservice_1.MenuService.getInstance().getById(menu);
+                    if (menu1 !== undefined) {
+                        const promotion1 = yield PromotionService_1.PromotionService.getInstance().getById(String((_b = menu1.promotion) === null || _b === void 0 ? void 0 : _b._id));
+                        if ((promotion1 === null || promotion1 === void 0 ? void 0 : promotion1.percentage) !== undefined) {
+                            price = price + (menu1.price - menu1.price * (menu1 === null || menu1 === void 0 ? void 0 : menu1.percentage) / 100);
                         }
                         else {
-                            price = price + menu1.price * 100;
+                            price = price + menu1.price;
                         }
                     }
-                    console.log(price);
                 }
             }
             return price;

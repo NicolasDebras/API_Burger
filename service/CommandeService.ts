@@ -1,6 +1,10 @@
 
 import {ProductService} from "./ProductService";
 import {CommandeDocument, CommandeModel, CommandeProsp} from "../model";
+import {PromotionService} from "./PromotionService";
+import {Schema} from "mongoose";
+import {MenuService} from "./Menuservice";
+
 
 
 export class CommandeService{
@@ -39,27 +43,27 @@ export class CommandeService{
                 let product = String(products[i]);
                 const product1 = await ProductService.getInstance().getById(product);
                 if (product1) {
-                    if (product1.promotion?.percentage !== undefined){
-                        price = price + product1.price * 100 / product1?.promotion.percentage;
-                    }else{
-                        price = price + product1.price * 100 ;
+                    const promotion1 = await  PromotionService.getInstance().getById(String(product1.promotion?._id));
+                    if (promotion1?.percentage !== undefined) {
+                        price = price + (product1.price - product1.price  *  promotion1?.percentage / 100);
+                    } else {
+                        price = price + product1.price ;
                     }
                 }
-                console.log(price);
             }
         }
         if( menus !== undefined){
             for(i=0; i<menus?.length; i++){
                 let menu = String(menus[i]);
-                const menu1 = await ProductService.getInstance().getById(menu);
-                if (menu1) {
-                    if (menu1.promotion?.percentage !== undefined){
-                        price = price + menu1.price * 100 / menu1?.promotion.percentage;
-                    }else{
-                        price = price + menu1.price * 100 ;
+                const menu1 = await MenuService.getInstance().getById(menu);
+                if (menu1 !== undefined ) {
+                    const promotion1 = await  PromotionService.getInstance().getById(String(menu1.promotion?._id));
+                    if (promotion1?.percentage !== undefined) {
+                        price = price + (menu1.price - menu1.price  *  menu1?.percentage / 100);
+                    } else {
+                        price = price + menu1.price ;
                     }
                 }
-                console.log(price);
             }
         }
         return price;
