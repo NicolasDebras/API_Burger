@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose"
+import { IngredientProps} from "./ingredientModel";
 import { UserProps } from "./user_model";
 
 const RestaurantSchema = new Schema({
@@ -16,7 +17,10 @@ const RestaurantSchema = new Schema({
     },
     user : [{
         type : Schema.Types.ObjectId
-    }] 
+    }],
+    stock : [{
+        type : Schema.Types.ObjectId,
+    }]
 
 }, {
     timestamps: true,
@@ -30,6 +34,7 @@ export interface RestaurantProsp {
     Cordlat : number;
     Cordlong : number;
     user : UserProps[];
+    stock : IngredientProps[];
     id :string;
 }
 

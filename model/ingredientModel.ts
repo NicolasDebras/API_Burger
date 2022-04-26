@@ -25,9 +25,9 @@ export interface IngredientProps {
     name : string;
     price : number;
     quantity : number;
-    id :string;
+    id? :string;
 }
 
 export type IngredientDocument = IngredientProps & Document;
 
-export const IngredientModel = mongoose.model("restaurant", IngredientSchema);
+export const IngredientModel = mongoose.model("Ingredient", IngredientSchema);
