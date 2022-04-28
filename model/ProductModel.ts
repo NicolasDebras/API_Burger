@@ -1,5 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose"
 import { PromotionProsp } from "./PromotionModel";
+import { IngredientProps} from "./ingredientModel";
 
 const ProductSchema = new Schema({
     name : {
@@ -14,7 +15,11 @@ const ProductSchema = new Schema({
     promotion : {
         type: Schema.Types.ObjectId,
         ref:"promotion"
-    }
+    },
+    receipts : [{
+        type: Schema.Types.ObjectId,
+        ref:"ingredient"
+    }]
 }, {
     timestamps: true,
     versionKey: false,
@@ -27,6 +32,7 @@ export interface ProductProsp {
     price: number;
     _id?: string;
     promotion? : PromotionProsp;
+    receipts ? : IngredientProps[];
 }
 
 export type ProductDocument = ProductProsp & Document;
