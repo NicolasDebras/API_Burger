@@ -40,6 +40,9 @@ const RestaurantSchema = new mongoose_1.Schema({
     },
     user: [{
             type: mongoose_1.Schema.Types.ObjectId
+        }],
+    stock: [{
+            type: mongoose_1.Schema.Types.ObjectId,
         }]
 }, {
     timestamps: true,

@@ -21,9 +21,10 @@ const Controller_1 = require("./Controller");
 const PromotionController_1 = require("./Controller/PromotionController");
 const MenuController_1 = require("./Controller/MenuController");
 const auth_controller_1 = require("./Controller/auth.controller");
+const IngredientController_1 = require("./Controller/IngredientController");
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
-        const m = yield mongoose_1.default.connect(process.env.MONGO_URI, {
+        const m = yield mongoose_1.default.connect(process.env.MONGO_URL, {
             auth: {
                 username: process.env.MONGO_USER,
                 password: process.env.MONGO_PASSWORD
@@ -42,6 +43,8 @@ function startServer() {
         app.use('/rest', restaurantController.buildRoutes());
         const authController = new auth_controller_1.AuthController();
         app.use('/auth', authController.buildRoutes());
+        const ingredientController = new IngredientController_1.IngredientController();
+        app.use('/ingredient', ingredientController.buildRoutes());
         app.listen(process.env.PORT, function () {
             console.log("Server listening on port " + process.env.PORT);
         });

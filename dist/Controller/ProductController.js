@@ -29,7 +29,8 @@ class ProductController {
                 const product = yield ProductService_1.ProductService.getInstance().createProduct({
                     name: productBody.name,
                     price: productBody.price,
-                    promotion: productBody.promotion
+                    promotion: productBody.promotion,
+                    receipts: productBody.receipts
                 });
                 res.json(product);
             }
