@@ -15,7 +15,8 @@ export class  ProductController {
             const product = await ProductService.getInstance().createProduct({
                 name: productBody.name,
                 price: productBody.price,
-                promotion: productBody.promotion
+                promotion: productBody.promotion,
+                receipts : productBody.receipts
             });
             res.json(product);
         } catch (err){

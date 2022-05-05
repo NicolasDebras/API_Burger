@@ -24,6 +24,7 @@ export class RestaurantService {
             Cordlat: restaurant.Cordlat,
             Cordlong: restaurant.Cordlong,
             user : restaurant.user,
+            stock : restaurant.stock
        })
        return model.save();
     }

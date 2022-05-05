@@ -8,15 +8,19 @@ import {CommandeController, ProductController} from "./Controller";
 import {PromotionController} from "./Controller/PromotionController";
 import {MenuController} from "./Controller/MenuController";
 import { AuthController } from './Controller/auth.controller';
+import { IngredientController } from "./Controller/IngredientController";
+
 async function startServer(): Promise<void> {
 
-    const m : Mongoose = await mongoose.connect(process.env.MONGO_URI as string, {
-        auth: {
-            username: process.env.MONGO_USER as string,
-            password: process.env.MONGO_PASSWORD as string
-
+    await mongoose.connect(
+        `${process.env.MONGO_URI}`,
+        {
+            auth: {
+                username: process.env.MONGO_USER,
+                password: process.env.MONGO_PWD
+            }
         }
-    });
+    );
     const app = express();
 
     const productController = new ProductController();
@@ -36,6 +40,9 @@ async function startServer(): Promise<void> {
 
     const authController = new AuthController();
     app.use('/auth', authController.buildRoutes());
+
+    const ingredientController = new IngredientController();
+    app.use('/ingredient', ingredientController.buildRoutes());
 
     app.listen(process.env.PORT, function (){
         console.log("Server listening on port " + process.env.PORT);
