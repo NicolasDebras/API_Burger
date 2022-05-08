@@ -21,13 +21,14 @@ class ProductController {
     createProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const productBody = req.body;
-            if (!productBody.name || !productBody.price) {
+            if (!productBody.name || !productBody.price || !productBody.recette) {
                 res.status(400).end();
                 return;
             }
             try {
                 const product = yield ProductService_1.ProductService.getInstance().createProduct({
                     name: productBody.name,
+                    recette: productBody.recette,
                     price: productBody.price,
                     promotion: productBody.promotion,
                     receipts: productBody.receipts

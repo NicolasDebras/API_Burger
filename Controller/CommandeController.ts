@@ -2,6 +2,7 @@ import express, {Router, Request, Response} from "express";
 import {CommandeService} from "../service";
 import {checkUserConnected} from "../middleware";
 import { checkUserRole } from "../middleware";
+import {Product} from "../class/Product";
 
 export class CommandeController{
     async createCommande(req: Request, res: Response){
@@ -13,7 +14,6 @@ export class CommandeController{
         try {
 
             const commande = await CommandeService.getInstance().createCommande({
-                nbrCommande: commandeBody.nbrCommande,
                 product: commandeBody.product,
                 menu: commandeBody.menu,
                 price: commandeBody.price,

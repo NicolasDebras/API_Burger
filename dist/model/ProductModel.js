@@ -28,8 +28,19 @@ const mongoose_1 = __importStar(require("mongoose"));
 const ProductSchema = new mongoose_1.Schema({
     name: {
         type: mongoose_1.Schema.Types.String,
+        unique: true,
         required: true
     },
+    recette: [{
+            ingredient: {
+                type: mongoose_1.Schema.Types.ObjectId,
+                ref: "ingredient",
+                unique: true
+            },
+            num: {
+                type: mongoose_1.Schema.Types.Number
+            }
+        }],
     price: {
         type: mongoose_1.Schema.Types.Number,
         Required: true,

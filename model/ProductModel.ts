@@ -5,17 +5,29 @@ import { IngredientProps} from "./ingredientModel";
 const ProductSchema = new Schema({
     name : {
         type: Schema.Types.String,
+        unique: true,
         required: true
     },
+    recette :[ {
+        ingredient: {
+            type: Schema.Types.ObjectId,
+            ref: "ingredient",
+            unique: true
+        },
+        num: {
+            type: Schema.Types.Number
+        }
+    }],
     price : {
         type: Schema.Types.Number,
         Required: true,
-        min:0 
+        min:0
     },
     promotion : {
         type: Schema.Types.ObjectId,
         ref:"promotion"
     },
+
     receipts : [{
         type: Schema.Types.ObjectId,
         ref:"ingredient"
@@ -31,6 +43,7 @@ export interface ProductProsp {
     name: string;
     price: number;
     _id?: string;
+    recette: [];
     promotion? : PromotionProsp;
     receipts ? : IngredientProps[];
 }

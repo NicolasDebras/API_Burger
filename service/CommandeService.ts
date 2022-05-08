@@ -4,6 +4,7 @@ import {CommandeDocument, CommandeModel, CommandeProsp} from "../model";
 import {PromotionService} from "./PromotionService";
 import {Schema} from "mongoose";
 import {MenuService} from "./Menuservice";
+import {Product} from "../class/Product";
 
 
 
@@ -22,6 +23,10 @@ export class CommandeService{
     }
 
     public async createCommande(props: CommandeProsp): Promise<CommandeDocument>{
+        let test = await  Product.enoughIngredient(props);
+        if (test.size >0 ){
+            Product.supIngredient(test);
+        }
         let max = 7000000;
         let min = 1;
         let nbr = (Math.random() * (max - min) + min) | 0 ;

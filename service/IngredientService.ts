@@ -39,12 +39,12 @@ export class IngredientService {
         if(!Ingredient){
             return null;
         }
-        if(props.name !== undefined){
+        /*if(props.name !== undefined){
             Ingredient.name = props.name;
         }
         if (props.price !== undefined){
             Ingredient.price = props.price;
-        }
+        }*/
         if (props.quantity !== undefined){
             Ingredient.promotion = props.quantity;
         }

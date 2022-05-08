@@ -1,7 +1,6 @@
 import express, {Request, Response, Router} from "express";
 import {AuthService} from "../service";
 import {checkUserConnected} from "../middleware";
-import { isConstructorDeclaration } from "typescript";
 
 export class AuthController {
 

@@ -5,6 +5,7 @@ export interface ProductProsp {
     name: string;
     price: number;
     _id?: string;
+    recette: [];
     promotion?: PromotionProsp;
     receipts?: IngredientProps[];
 }

@@ -7,13 +7,14 @@ export class  ProductController {
 
     async createProduct( req: Request, res: Response) {
         const productBody = req.body;
-        if (!productBody.name || ! productBody.price ){
+        if (!productBody.name || ! productBody.price || !productBody.recette ){
             res.status(400).end();
             return;
         }
         try {
             const product = await ProductService.getInstance().createProduct({
                 name: productBody.name,
+                recette: productBody.recette,
                 price: productBody.price,
                 promotion: productBody.promotion,
                 receipts : productBody.receipts

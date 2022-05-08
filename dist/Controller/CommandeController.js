@@ -25,7 +25,6 @@ class CommandeController {
             }
             try {
                 const commande = yield service_1.CommandeService.getInstance().createCommande({
-                    nbrCommande: commandeBody.nbrCommande,
                     product: commandeBody.product,
                     menu: commandeBody.menu,
                     price: commandeBody.price,

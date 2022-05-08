@@ -14,6 +14,7 @@ const ProductService_1 = require("./ProductService");
 const model_1 = require("../model");
 const PromotionService_1 = require("./PromotionService");
 const Menuservice_1 = require("./Menuservice");
+const Product_1 = require("../class/Product");
 class CommandeService {
     constructor() {
     }
@@ -25,6 +26,10 @@ class CommandeService {
     }
     createCommande(props) {
         return __awaiter(this, void 0, void 0, function* () {
+            let test = yield Product_1.Product.enoughIngredient(props);
+            if (test.size > 0) {
+                Product_1.Product.supIngredient(test);
+            }
             let max = 7000000;
             let min = 1;
             let nbr = (Math.random() * (max - min) + min) | 0;

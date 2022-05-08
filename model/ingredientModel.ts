@@ -1,10 +1,17 @@
 import mongoose, { Schema } from "mongoose"
 import { UserProps } from "./user_model";
+import {RestaurantProsp} from "./RestaurantModel";
 
 const IngredientSchema = new Schema({
     name : {
         type: Schema.Types.String,
-        required: true
+        required: true,
+    },
+    restaurant : {
+        type: Schema.Types.ObjectId,
+        ref: "restaurant",
+        unique: true,
+        required: true,
     },
     price : {
         type: Schema.Types.Number,
@@ -13,7 +20,6 @@ const IngredientSchema = new Schema({
         type: Schema.Types.Number,
         Required: true,
     },
-
 }, {
     timestamps: true,
     versionKey: false,
@@ -23,6 +29,7 @@ const IngredientSchema = new Schema({
 
 export interface IngredientProps {
     name : string;
+    restaurant: RestaurantProsp;
     price : number;
     quantity : number;
     id? :string;

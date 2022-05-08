@@ -6,17 +6,20 @@ export class IngredientController {
 
     async createIngredient(req: Request, res: Response){
         const IngredientBody = req.body;
-        if (!IngredientBody.name || !IngredientBody.price || !IngredientBody.quantity){
+        if (!IngredientBody.name || !IngredientBody.price || !IngredientBody.quantity || !IngredientBody.restaurant ){
             res.status(400).end();
             return;
         }
+        //console.log(IngredientBody);
         try {
             const ingredient= await IngredientService.getInstance().createIngredient( {
                 name: IngredientBody.name,
+                restaurant: IngredientBody.restaurant,
                 price: IngredientBody.price,
                 quantity: IngredientBody.quantity
             } ) ;
             res.json(ingredient);
+
         } catch (err){
             res.status(400).end();
             return;
