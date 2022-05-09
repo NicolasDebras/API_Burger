@@ -9,12 +9,12 @@ export class verifAuth {
         }
         switch (roleUser){
             case "bigBoss":
-                if ("customer" == roleCreateUser || "preparateur" == roleCreateUser || "admin" == roleCreateUser){
-                    return 0;
-                }
+                return 0;
                 break;
             case "admin":
-                if ("customer" == roleCreateUser || "preparateur" == roleCreateUser){
+                if (roleCreateUser == "admin"){
+                    return 1;
+                }else{
                     return 0;
                 }
                 break;
