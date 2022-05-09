@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RestaurantController = void 0;
 const express_1 = __importDefault(require("express"));
 const RestaurantService_1 = require("../service/RestaurantService");
+const middleware_1 = require("../middleware");
 class RestaurantController {
     CreateRestaurant(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -40,7 +41,8 @@ class RestaurantController {
     }
     buildRoutes() {
         const router = express_1.default.Router();
-        router.post('/', express_1.default.json(), this.CreateRestaurant.bind(this));
+        router.use((0, middleware_1.checkUserConnected)());
+        router.post('/', (0, middleware_1.checkUserRole)(["bigBoss"]), express_1.default.json(), this.CreateRestaurant.bind(this));
         return router;
     }
 }

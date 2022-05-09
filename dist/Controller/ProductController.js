@@ -98,12 +98,12 @@ class ProductController {
     buildRoutes() {
         const routeur = express_1.default.Router();
         routeur.use((0, middleware_1.checkUserConnected)());
-        routeur.post('/', express_1.default.json(), this.createProduct.bind(this));
+        routeur.post('/', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur", "customer"]), express_1.default.json(), this.createProduct.bind(this));
         //Exemple pour protéger avec un rôle : 
-        routeur.get('/', (0, middleware_2.checkUserRole)(["admin"]), this.getAllProducts.bind(this));
-        routeur.get('/:product_id', this.getProduct.bind(this));
-        routeur.delete('/:product_id', this.deleteProduct.bind(this));
-        routeur.put('/:product_id', express_1.default.json(), this.updateProduct.bind(this));
+        routeur.get('/', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur", "customer"]), this.getAllProducts.bind(this));
+        routeur.get('/:product_id', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur", "customer"]), this.getProduct.bind(this));
+        routeur.delete('/:product_id', (0, middleware_2.checkUserRole)(["admin", "bigBoss"]), this.deleteProduct.bind(this));
+        routeur.put('/:product_id', (0, middleware_2.checkUserRole)(["admin", "bigBoss"]), express_1.default.json(), this.updateProduct.bind(this));
         return routeur;
     }
 }

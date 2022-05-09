@@ -1,5 +1,6 @@
 import express, {Router, Request, Response} from "express";
 import {MenuService} from "../service/Menuservice";
+import {checkUserConnected, checkUserRole} from "../middleware";
 
 
 
@@ -73,11 +74,12 @@ export class MenuController {
 
     buildRoutes(): Router {
         const routeur = express.Router();
-        routeur.post('/', express.json(), this.createMenu.bind(this));
-        routeur.get('/', this.getAllMenu.bind(this));
-        routeur.get('/:menu_id', this.getMenu.bind(this));
-        routeur.delete('/:menu_id', this.deleteMenu.bind(this));
-        routeur.put('/:menu_id', express.json(),  this.updateMenu.bind(this));
+        routeur.use(checkUserConnected());
+        routeur.post('/', checkUserRole(["admin", "bigBoss"]), express.json(), this.createMenu.bind(this));
+        routeur.get('/', checkUserRole(["admin", "bigBoss", "preparateur", "customer"]), this.getAllMenu.bind(this));
+        routeur.get('/:menu_id',checkUserRole(["admin", "bigBoss", "preparateur", "customer"]), this.getMenu.bind(this));
+        routeur.delete('/:menu_id',checkUserRole(["admin", "bigBoss"]), this.deleteMenu.bind(this));
+        routeur.put('/:menu_id', checkUserRole(["admin", "bigBoss"]), express.json(),  this.updateMenu.bind(this));
         return routeur;
     }
 }

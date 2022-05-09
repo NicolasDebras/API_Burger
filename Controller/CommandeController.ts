@@ -79,10 +79,10 @@ export class CommandeController{
         const routeur = express.Router();
         routeur.use(checkUserConnected());
         routeur.post('/', express.json(), this.createCommande.bind(this));
-        routeur.get('/', this.getAllCommande.bind(this));
-        routeur.get('/:commande_id', this.getCommande.bind(this));
-        routeur.delete('/:commande_id', this.deleteCommande.bind(this));
-        routeur.put('/:commande_id', express.json(),  this.updateCommande.bind(this));
+        routeur.get('/',checkUserRole(["admin", "bigBoss", "preparateur"]),  this.getAllCommande.bind(this));
+        routeur.get('/:commande_id',checkUserRole(["admin", "bigBoss", "preparateur", "livreur"]), this.getCommande.bind(this));
+        routeur.delete('/:commande_id',checkUserRole(["admin", "bigBoss", "livreur"]),  this.deleteCommande.bind(this));
+        routeur.put('/:commande_id', express.json(),checkUserRole(["admin", "bigBoss", "preparateur"]),  this.updateCommande.bind(this));
         return routeur;
     }
 }

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MenuController = void 0;
 const express_1 = __importDefault(require("express"));
 const Menuservice_1 = require("../service/Menuservice");
+const middleware_1 = require("../middleware");
 class MenuController {
     createMenu(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -94,11 +95,12 @@ class MenuController {
     }
     buildRoutes() {
         const routeur = express_1.default.Router();
-        routeur.post('/', express_1.default.json(), this.createMenu.bind(this));
-        routeur.get('/', this.getAllMenu.bind(this));
-        routeur.get('/:menu_id', this.getMenu.bind(this));
-        routeur.delete('/:menu_id', this.deleteMenu.bind(this));
-        routeur.put('/:menu_id', express_1.default.json(), this.updateMenu.bind(this));
+        routeur.use((0, middleware_1.checkUserConnected)());
+        routeur.post('/', (0, middleware_1.checkUserRole)(["admin", "bigBoss"]), express_1.default.json(), this.createMenu.bind(this));
+        routeur.get('/', (0, middleware_1.checkUserRole)(["admin", "bigBoss", "preparateur", "customer"]), this.getAllMenu.bind(this));
+        routeur.get('/:menu_id', (0, middleware_1.checkUserRole)(["admin", "bigBoss", "preparateur", "customer"]), this.getMenu.bind(this));
+        routeur.delete('/:menu_id', (0, middleware_1.checkUserRole)(["admin", "bigBoss"]), this.deleteMenu.bind(this));
+        routeur.put('/:menu_id', (0, middleware_1.checkUserRole)(["admin", "bigBoss"]), express_1.default.json(), this.updateMenu.bind(this));
         return routeur;
     }
 }

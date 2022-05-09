@@ -1,6 +1,7 @@
 import express,{ Router, Request,  Response} from "express";
 import {Mongoose} from "mongoose";
 import { RestaurantService } from "../service/RestaurantService";
+import {checkUserConnected, checkUserRole} from "../middleware";
 
 export class RestaurantController {
 
@@ -26,7 +27,8 @@ export class RestaurantController {
     }
     buildRoutes() : Router {
         const router = express.Router();
-        router.post('/', express.json(), this.CreateRestaurant.bind(this))
+        router.use(checkUserConnected());
+        router.post('/', checkUserRole(["bigBoss"]),express.json(), this.CreateRestaurant.bind(this))
         return router;
     }
 

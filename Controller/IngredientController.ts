@@ -1,6 +1,7 @@
 import { IngredientService } from "../service/IngredientService";
 import express,{ Router, Request,  Response} from "express";
 import {Mongoose} from "mongoose";
+import {checkUserConnected, checkUserRole} from "../middleware";
 
 export class IngredientController {
 
@@ -74,11 +75,12 @@ export class IngredientController {
 
     buildRoutes(): Router {
         const routeur = express.Router();
+        routeur.use(checkUserConnected());
         routeur.post('/', express.json(), this.createIngredient.bind(this));
-        routeur.get('/', this.getAllIngredient.bind(this));
-        routeur.get('/:Ingredient_id', this.getIngredient.bind(this));
-        routeur.delete('/:Ingredient_id', this.deleteIngredient.bind(this));
-        routeur.put('/:Ingredient_id', express.json(),  this.updateIngredient.bind(this));
+        routeur.get('/', checkUserRole(["admin", "bigBoss", "preparateur", "customer"]), this.getAllIngredient.bind(this));
+        routeur.get('/:Ingredient_id', checkUserRole(["admin", "bigBoss", "preparateur"]), this.getIngredient.bind(this));
+        routeur.delete('/:Ingredient_id',checkUserRole(["admin", "bigBoss"]),  this.deleteIngredient.bind(this));
+        routeur.put('/:Ingredient_id', checkUserRole(["admin", "bigBoss"]),express.json(),  this.updateIngredient.bind(this));
         return routeur;
     }
 

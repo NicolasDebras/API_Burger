@@ -16,6 +16,7 @@ exports.CommandeController = void 0;
 const express_1 = __importDefault(require("express"));
 const service_1 = require("../service");
 const middleware_1 = require("../middleware");
+const middleware_2 = require("../middleware");
 class CommandeController {
     createCommande(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -98,10 +99,10 @@ class CommandeController {
         const routeur = express_1.default.Router();
         routeur.use((0, middleware_1.checkUserConnected)());
         routeur.post('/', express_1.default.json(), this.createCommande.bind(this));
-        routeur.get('/', this.getAllCommande.bind(this));
-        routeur.get('/:commande_id', this.getCommande.bind(this));
-        routeur.delete('/:commande_id', this.deleteCommande.bind(this));
-        routeur.put('/:commande_id', express_1.default.json(), this.updateCommande.bind(this));
+        routeur.get('/', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur"]), this.getAllCommande.bind(this));
+        routeur.get('/:commande_id', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur", "livreur"]), this.getCommande.bind(this));
+        routeur.delete('/:commande_id', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "livreur"]), this.deleteCommande.bind(this));
+        routeur.put('/:commande_id', express_1.default.json(), (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur"]), this.updateCommande.bind(this));
         return routeur;
     }
 }

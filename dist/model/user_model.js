@@ -38,6 +38,10 @@ const userSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.String,
         required: true
     },
+    restaurant: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Restaurant"
+    },
     sessions: [
         {
             type: mongoose_1.Schema.Types.ObjectId,

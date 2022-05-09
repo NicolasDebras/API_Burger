@@ -1,5 +1,6 @@
 import express, {Router, Request, Response} from "express";
 import {PromotionService} from "../service/PromotionService";
+import {checkUserConnected, checkUserRole} from "../middleware";
 
 
 export class PromotionController {
@@ -70,11 +71,12 @@ export class PromotionController {
 
     buildRoutes(): Router {
         const routeur = express.Router();
-        routeur.post('/', express.json(), this.createPromotion.bind(this));
-        routeur.get('/', this.getAllPromotions.bind(this));
-        routeur.get('/:promotion_id', this.getPromotion.bind(this));
-        routeur.delete('/:promotion_id', this.deletePromotion.bind(this));
-        routeur.put('/:promotion_id', express.json(),  this.updatePromotion.bind(this));
+        routeur.use(checkUserConnected());
+        routeur.post('/',  checkUserRole(["admin", "bigBoss"]), express.json(), this.createPromotion.bind(this));
+        routeur.get('/', checkUserRole(["admin", "bigBoss", "livreur", "customer"]), this.getAllPromotions.bind(this));
+        routeur.get('/:promotion_id', checkUserRole(["admin", "bigBoss", "livreur", "customer"]), this.getPromotion.bind(this));
+        routeur.delete('/:promotion_id', checkUserRole(["admin", "bigBoss"]), this.deletePromotion.bind(this));
+        routeur.put('/:promotion_id', checkUserRole(["admin", "bigBoss"]), express.json(),  this.updatePromotion.bind(this));
         return routeur;
     }
 }

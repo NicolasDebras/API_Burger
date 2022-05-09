@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PromotionController = void 0;
 const express_1 = __importDefault(require("express"));
 const PromotionService_1 = require("../service/PromotionService");
+const middleware_1 = require("../middleware");
 class PromotionController {
     createPromotion(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -92,11 +93,12 @@ class PromotionController {
     }
     buildRoutes() {
         const routeur = express_1.default.Router();
-        routeur.post('/', express_1.default.json(), this.createPromotion.bind(this));
-        routeur.get('/', this.getAllPromotions.bind(this));
-        routeur.get('/:promotion_id', this.getPromotion.bind(this));
-        routeur.delete('/:promotion_id', this.deletePromotion.bind(this));
-        routeur.put('/:promotion_id', express_1.default.json(), this.updatePromotion.bind(this));
+        routeur.use((0, middleware_1.checkUserConnected)());
+        routeur.post('/', (0, middleware_1.checkUserRole)(["admin", "bigBoss"]), express_1.default.json(), this.createPromotion.bind(this));
+        routeur.get('/', (0, middleware_1.checkUserRole)(["admin", "bigBoss", "livreur", "customer"]), this.getAllPromotions.bind(this));
+        routeur.get('/:promotion_id', (0, middleware_1.checkUserRole)(["admin", "bigBoss", "livreur", "customer"]), this.getPromotion.bind(this));
+        routeur.delete('/:promotion_id', (0, middleware_1.checkUserRole)(["admin", "bigBoss"]), this.deletePromotion.bind(this));
+        routeur.put('/:promotion_id', (0, middleware_1.checkUserRole)(["admin", "bigBoss"]), express_1.default.json(), this.updatePromotion.bind(this));
         return routeur;
     }
 }
