@@ -1,6 +1,9 @@
-import {UserDocument, UserModel, UserProps} from "../model";
+import {ProductDocument, ProductModel, UserDocument, UserModel, UserProps} from "../model";
 import {SecurityUtils} from "../utils";
 import {SessionDocument, SessionModel} from "../model";
+import {verify} from "crypto";
+import {verifAuth} from "../class/verifAuth";
+import {RestaurantService} from "./RestaurantService";
 
 export class AuthService {
 
@@ -19,12 +22,37 @@ export class AuthService {
         if(!user.password) {
             throw new Error('Missing password');
         }
+        if (!user.role){
+            throw new Error('Missing role');
+        }
+        if (user.login){
+            let LogInReturn = await this.getByLogin(user.login);
+            if (LogInReturn !== undefined){
+                throw  new Error("The login is already taken");
+            }
+        }
+
+        if (user.restaurant ){
+            let restaurantFind = await RestaurantService.getInstance().getById(user.restaurant);
+            if (restaurantFind === undefined ){
+                throw new Error("The restaurant not find");
+            }else{
+                const model = new UserModel({
+                    login: user.login,
+                    password: SecurityUtils.sha512(user.password),
+                    role: user.role,
+                    restaurant: user.restaurant
+                });
+                return model.save();
+            }
+        }
         const model = new UserModel({
             login: user.login,
             password: SecurityUtils.sha512(user.password),
             role: user.role
         });
         return model.save();
+
     }
 
     // Pick selectionne des champs dans le type
@@ -57,5 +85,15 @@ export class AuthService {
             }
         }).populate("user").exec();
         return session ? session.user as UserProps : null;
+    }
+
+    async getById(authId: string): Promise<UserDocument | null > {
+        return UserModel.findById(authId).exec();
+    }
+
+    async getByLogin(login: string | undefined): Promise<UserDocument | null>{
+        return UserModel.findOne({
+            login: login
+        })
     }
 }

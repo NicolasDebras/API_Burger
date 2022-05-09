@@ -15,12 +15,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandeController = void 0;
 const express_1 = __importDefault(require("express"));
 const service_1 = require("../service");
+const middleware_1 = require("../middleware");
 class CommandeController {
     createCommande(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const commandeBody = req.body;
             if (!commandeBody === null) {
-                res.status(400).end();
+                res.status(401).end();
                 return;
             }
             try {
@@ -33,6 +34,7 @@ class CommandeController {
                 res.json(commande);
             }
             catch (err) {
+                console.log(err);
                 res.status(400).end();
                 return;
             }
@@ -94,7 +96,7 @@ class CommandeController {
     }
     buildRoutes() {
         const routeur = express_1.default.Router();
-        //routeur.use(checkUserConnected());
+        routeur.use((0, middleware_1.checkUserConnected)());
         routeur.post('/', express_1.default.json(), this.createCommande.bind(this));
         routeur.get('/', this.getAllCommande.bind(this));
         routeur.get('/:commande_id', this.getCommande.bind(this));

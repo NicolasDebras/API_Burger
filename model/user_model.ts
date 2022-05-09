@@ -15,6 +15,10 @@ const userSchema = new Schema({
         type: Schema.Types.String,
         required: true
     },
+    restaurant: {
+        type: Schema.Types.ObjectId,
+        ref: "Restaurant"
+    },
     sessions: [
         {
             type: Schema.Types.ObjectId,
@@ -33,6 +37,7 @@ export interface UserProps {
     login: string;
     password: string;
     role : string;
+    restaurant?: string;
     sessions: string[] | SessionProps[];
 }
 

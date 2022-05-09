@@ -6,9 +6,10 @@ import {Product} from "../class/Product";
 
 export class CommandeController{
     async createCommande(req: Request, res: Response){
+
         const commandeBody = req.body;
         if (!commandeBody === null ){
-            res.status(400).end();
+            res.status(401).end();
             return;
         }
         try {
@@ -19,8 +20,10 @@ export class CommandeController{
                 price: commandeBody.price,
                 promotion: commandeBody.promotion
             });
+
             res.json(commande);
         } catch (err){
+            console.log(err);
             res.status(400).end();
             return;
         }
