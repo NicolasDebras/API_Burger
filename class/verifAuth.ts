@@ -4,6 +4,9 @@ export class verifAuth {
         if (roleCreateUser==="customer"){
             return 0;
         }
+        if (roleCreateUser==="bigBoss"){
+            return 0;
+        }
         switch (roleUser){
             case "bigBoss":
                 if ("Customer" == roleCreateUser || "Preparateur" == roleCreateUser || "admin" == roleCreateUser){
