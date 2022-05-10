@@ -41,6 +41,7 @@ async function startServer(): Promise<void> {
     const ingredientController = new IngredientController();
     app.use('/ingredient', ingredientController.buildRoutes());
 
+
     app.listen(process.env.PORT, function (){
         console.log("Server listening on port " + process.env.PORT);
     });

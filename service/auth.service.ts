@@ -1,8 +1,5 @@
-import {ProductDocument, ProductModel, UserDocument, UserModel, UserProps} from "../model";
+import {SessionDocument, SessionModel, UserDocument, UserModel, UserProps} from "../model";
 import {SecurityUtils} from "../utils";
-import {SessionDocument, SessionModel} from "../model";
-import {verify} from "crypto";
-import {verifAuth} from "../class/verifAuth";
 import {RestaurantService} from "./RestaurantService";
 
 export class AuthService {
@@ -95,5 +92,10 @@ export class AuthService {
         return UserModel.findOne({
             login: login
         })
+    }
+
+    async  getByRestaurant(restaurandId: string | undefined): Promise<UserDocument|String|Array<String>| null >{
+        let employers  = await UserModel.find({restaurant: restaurandId}).exec();
+        return  employers
     }
 }

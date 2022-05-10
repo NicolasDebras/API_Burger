@@ -4,6 +4,7 @@ import { RestaurantDocument } from "../model/RestaurantModel";
 import { RestaurantService } from "../service/RestaurantService";
 import {checkUserConnected} from "../middleware";
 import { checkUserRole } from "../middleware";
+import {AuthService} from "../service";
 export class RestaurantController {
 
     async CreateRestaurant(req: Request, res: Response) {
@@ -72,13 +73,28 @@ export class RestaurantController {
         }
     }
 
+    async getAllEmployesOneInRestaurant(req: Request, res: Response){
+        try {
+            const employers = await AuthService.getInstance().getByRestaurant(req.params.Restaurant_id);
+            if(employers === null) {
+                res.status(404).end();
+                return;
+            }
+            res.json(employers);
+        } catch(err) {
+            res.status(400).end();
+            return;
+        }
+    }
+
     buildRoutes() : Router {
         const router = express.Router();
         router.use(checkUserConnected());
         router.post('/', checkUserRole([ "bigBoss"]), express.json(), this.CreateRestaurant.bind(this))
+        router.get('/employers/:Restaurant_id', checkUserRole(['bigBoss']), this.getAllEmployesOneInRestaurant.bind(this))
         router.get('/find/:Restaurant_id', checkUserRole(["bigBoss"]),express.json(), this.getRestaurant.bind(this))
         router.get('/all/',express.json(),checkUserRole(["bigBoss", "customer"]),  this.getAllRestaurant.bind(this))
-        router.delete('/:Restaurant_id',checkUserRole(["bigBoss"]), this.getRestaurant.bind(this))
+        router.delete('/:Restaurant_id',checkUserRole(["bigBoss"]), this.deleteRestaurant.bind(this))
         router.put('/:Restaurant_id',checkUserRole(["bigBoss"]), express.json(), this.updateRestaurant.bind(this))
         return router;
     }
