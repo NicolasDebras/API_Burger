@@ -73,8 +73,8 @@ export class PromotionController {
         const routeur = express.Router();
         routeur.use(checkUserConnected());
         routeur.post('/',  checkUserRole(["admin", "bigBoss"]), express.json(), this.createPromotion.bind(this));
-        routeur.get('/', checkUserRole(["admin", "bigBoss", "livreur", "customer"]), this.getAllPromotions.bind(this));
-        routeur.get('/:promotion_id', checkUserRole(["admin", "bigBoss", "livreur", "customer"]), this.getPromotion.bind(this));
+        routeur.get('/', checkUserRole(["admin", "bigBoss", "customer"]), this.getAllPromotions.bind(this));
+        routeur.get('/:promotion_id', checkUserRole(["admin", "bigBoss", "customer"]), this.getPromotion.bind(this));
         routeur.delete('/:promotion_id', checkUserRole(["admin", "bigBoss"]), this.deletePromotion.bind(this));
         routeur.put('/:promotion_id', checkUserRole(["admin", "bigBoss"]), express.json(),  this.updatePromotion.bind(this));
         return routeur;

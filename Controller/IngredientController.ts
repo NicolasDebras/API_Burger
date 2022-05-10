@@ -77,7 +77,7 @@ export class IngredientController {
         const routeur = express.Router();
         routeur.use(checkUserConnected());
         routeur.post('/', express.json(), this.createIngredient.bind(this));
-        routeur.get('/', checkUserRole(["admin", "bigBoss", "preparateur", "customer"]), this.getAllIngredient.bind(this));
+        routeur.get('/', checkUserRole(["admin", "bigBoss", "preparateur"]), this.getAllIngredient.bind(this));
         routeur.get('/:Ingredient_id', checkUserRole(["admin", "bigBoss", "preparateur"]), this.getIngredient.bind(this));
         routeur.delete('/:Ingredient_id',checkUserRole(["admin", "bigBoss"]),  this.deleteIngredient.bind(this));
         routeur.put('/:Ingredient_id', checkUserRole(["admin", "bigBoss"]),express.json(),  this.updateIngredient.bind(this));

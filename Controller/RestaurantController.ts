@@ -75,11 +75,11 @@ export class RestaurantController {
     buildRoutes() : Router {
         const router = express.Router();
         router.use(checkUserConnected());
-        router.post('/', express.json(), this.CreateRestaurant.bind(this))
-        router.get('/find/:Restaurant_id',express.json(), this.getRestaurant.bind(this))
-        router.get('/all/',express.json(), this.getAllRestaurant.bind(this))
-        router.delete('/:Restaurant_id', this.getRestaurant.bind(this))
-        router.put('/:Restaurant_id',express.json(), this.updateRestaurant.bind(this))
+        router.post('/', checkUserRole([ "bigBoss"]), express.json(), this.CreateRestaurant.bind(this))
+        router.get('/find/:Restaurant_id', checkUserRole(["bigBoss"]),express.json(), this.getRestaurant.bind(this))
+        router.get('/all/',express.json(),checkUserRole(["bigBoss", "customer"]),  this.getAllRestaurant.bind(this))
+        router.delete('/:Restaurant_id',checkUserRole(["bigBoss"]), this.getRestaurant.bind(this))
+        router.put('/:Restaurant_id',checkUserRole(["bigBoss"]), express.json(), this.updateRestaurant.bind(this))
         return router;
     }
 
