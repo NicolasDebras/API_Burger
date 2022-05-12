@@ -20,7 +20,7 @@ const RestaurantSchema = new Schema({
     }],
     stock : [{
         type : Schema.Types.ObjectId,
-    }]
+    }],
 
 }, {
     timestamps: true,

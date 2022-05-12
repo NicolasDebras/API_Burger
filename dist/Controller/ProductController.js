@@ -25,13 +25,17 @@ class ProductController {
                 res.status(400).end();
                 return;
             }
+            if (!productBody.promote) {
+                productBody.promote = 0;
+            }
             try {
                 const product = yield ProductService_1.ProductService.getInstance().createProduct({
                     name: productBody.name,
                     recette: productBody.recette,
                     price: productBody.price,
                     promotion: productBody.promotion,
-                    receipts: productBody.receipts
+                    receipts: productBody.receipts,
+                    promote: productBody.promote
                 });
                 res.json(product);
             }
@@ -82,6 +86,9 @@ class ProductController {
     updateProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                if (!req.body.promote) {
+                    req.body.promote = 0;
+                }
                 const product = yield ProductService_1.ProductService.getInstance()
                     .updateById(req.params.product_id, req.body);
                 if (!product) {

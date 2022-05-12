@@ -24,12 +24,16 @@ class MenuController {
                 res.status(400).end();
                 return;
             }
+            if (!menuBody.promote) {
+                menuBody.promote = 0;
+            }
             try {
                 const menu = yield Menuservice_1.MenuService.getInstance().createMenu({
                     name: menuBody.name,
                     price: menuBody.price,
                     product: menuBody.product,
-                    promotion: menuBody.promotion
+                    promotion: menuBody.promotion,
+                    promote: menuBody.promote
                 });
                 res.json(menu);
             }
@@ -80,6 +84,9 @@ class MenuController {
     updateMenu(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
+                if (!req.body.promote) {
+                    req.body.promote = 0;
+                }
                 const menu = yield Menuservice_1.MenuService.getInstance()
                     .updateById(req.params.menu_id, req.body);
                 if (!menu) {

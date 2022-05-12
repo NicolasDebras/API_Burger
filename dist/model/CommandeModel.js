@@ -46,6 +46,10 @@ const CommandeSchema = new mongoose_1.Schema({
     promotion: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "promotion"
+    },
+    restaurant: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "restaurant"
     }
 }, {
     timestamps: true,

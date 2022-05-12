@@ -43,7 +43,7 @@ const RestaurantSchema = new mongoose_1.Schema({
         }],
     stock: [{
             type: mongoose_1.Schema.Types.ObjectId,
-        }]
+        }],
 }, {
     timestamps: true,
     versionKey: false,

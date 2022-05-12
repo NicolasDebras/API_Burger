@@ -7,6 +7,7 @@ export interface MenuProsp {
     price: number;
     _id?: string;
     promotion?: PromotionProsp;
+    promote: boolean;
 }
 export declare type MenuDocument = MenuProsp & Document;
 export declare const MenuModel: mongoose.Model<any, {}, {}, {}>;

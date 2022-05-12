@@ -8,6 +8,7 @@ export interface ProductProsp {
     recette: [];
     promotion?: PromotionProsp;
     receipts?: IngredientProps[];
+    promote: boolean;
 }
 export declare type ProductDocument = ProductProsp & Document;
 export declare const ProductModel: mongoose.Model<any, {}, {}, {}>;

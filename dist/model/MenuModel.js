@@ -42,6 +42,9 @@ const MenuSchema = new mongoose_1.Schema({
     promotion: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "promotion"
+    },
+    promote: {
+        type: mongoose_1.Schema.Types.Boolean
     }
 }, {
     timestamps: true,

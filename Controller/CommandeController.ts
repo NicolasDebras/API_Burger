@@ -8,17 +8,19 @@ export class CommandeController{
     async createCommande(req: Request, res: Response){
 
         const commandeBody = req.body;
-        if (!commandeBody === null ){
+        if (!commandeBody === null || !commandeBody.restaurant || !commandeBody.user ){
             res.status(401).end();
             return;
         }
         try {
 
             const commande = await CommandeService.getInstance().createCommande({
+                user: commandeBody.user,
                 product: commandeBody.product,
                 menu: commandeBody.menu,
                 price: commandeBody.price,
-                promotion: commandeBody.promotion
+                promotion: commandeBody.promotion,
+                restaurant: commandeBody.restaurant
             });
 
             res.json(commande);

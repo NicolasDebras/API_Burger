@@ -91,7 +91,7 @@ export class AuthService {
     async getByLogin(login: string | undefined): Promise<UserDocument | null>{
         return UserModel.findOne({
             login: login
-        })
+        }).exec();
     }
 
     async  getByRestaurant(restaurandId: string | undefined): Promise<UserDocument|String|Array<String>| null >{

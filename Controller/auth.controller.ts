@@ -20,13 +20,27 @@ export class AuthController {
         if (!req.body.role || ( this.role.indexOf(req.body.role) && req.body.role !== "customer")){
             req.body.role = "customer";
         }
+        if (req.body.restaurant){
+            verifAuth.cordonateUser(req.body.role, req.body.restaurant, req);
+        }
+
 
         try {
-            const user = await AuthService.getInstance().subscribeUser({
-                login: req.body.login,
-                password: req.body.password,
-                role: req.body.role
-            });
+            let user;
+            if (req.body.restaurant){
+                user = await AuthService.getInstance().subscribeUser({
+                    login: req.body.login,
+                    password: req.body.password,
+                    restaurant: req.body.restaurant,
+                    role: req.body.role
+                });
+            }else {
+                user = await AuthService.getInstance().subscribeUser({
+                    login: req.body.login,
+                    password: req.body.password,
+                    role: req.body.role
+                });
+            }
             res.json(user);
         } catch(err) {
             console.log(err);

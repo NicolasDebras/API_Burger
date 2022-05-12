@@ -24,7 +24,14 @@ const userSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "Session"
         }
-    ]
+    ],
+    coordStart: [
+        {
+            long :Number,
+            lat :Number
+        }
+    ],
+
 
 }, {
     collection: "users",

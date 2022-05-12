@@ -53,7 +53,10 @@ const ProductSchema = new mongoose_1.Schema({
     receipts: [{
             type: mongoose_1.Schema.Types.ObjectId,
             ref: "ingredient"
-        }]
+        }],
+    promote: {
+        type: mongoose_1.Schema.Types.Boolean
+    }
 }, {
     timestamps: true,
     versionKey: false,

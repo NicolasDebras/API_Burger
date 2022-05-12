@@ -40,6 +40,8 @@ export class RestaurantService {
         const res = await RestaurantModel.deleteOne({id:idRestaurant}).exec();
         return res.deletedCount === 1;
     }
+
+
     public async Update(idRestaurant: string, props: RestaurantProsp) {
         const restaurant = await this.getById(idRestaurant);
 
