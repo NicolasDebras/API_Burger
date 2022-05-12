@@ -12,12 +12,16 @@ export class MenuController {
             res.status(400).end();
             return;
         }
+        if (!menuBody.promote){
+            menuBody.promote = 0;
+        }
         try {
             const menu= await MenuService.getInstance().createMenu({
                 name: menuBody.name,
                 price: menuBody.price,
                 product: menuBody.product,
-                promotion: menuBody.promotion
+                promotion: menuBody.promotion,
+                promote: menuBody.promote
             });
             res.json(menu);
         } catch (err){
@@ -60,6 +64,9 @@ export class MenuController {
 
     async updateMenu(req: Request, res: Response){
         try {
+            if (!req.body.promote){
+                req.body.promote = 0;
+            }
             const menu = await MenuService.getInstance()
                 .updateById(req.params.menu_id, req.body);
             if(!menu){

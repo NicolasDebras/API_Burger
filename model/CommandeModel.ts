@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 import {ProductProsp} from "./ProductModel";
 import {PromotionProsp} from "./PromotionModel";
 import {MenuProsp} from "./MenuModel";
+import {RestaurantProsp} from "./RestaurantModel";
 
 
 const CommandeSchema = new Schema({
@@ -25,6 +26,10 @@ const CommandeSchema = new Schema({
         promotion : {
             type: Schema.Types.ObjectId,
             ref:"promotion"
+        },
+        restaurant : {
+            type: Schema.Types.ObjectId,
+            ref:"restaurant"
         }
 
     }, {
@@ -40,6 +45,7 @@ export interface CommandeProsp {
     price?: number;
     _id?: string;
     promotion? : PromotionProsp;
+    restaurant? : RestaurantProsp;
     nbrCommande?: string;
 }
 

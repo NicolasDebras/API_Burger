@@ -31,7 +31,11 @@ const ProductSchema = new Schema({
     receipts : [{
         type: Schema.Types.ObjectId,
         ref:"ingredient"
-    }]
+    }],
+    promote : {
+        type: Schema.Types.Boolean
+    }
+
 }, {
     timestamps: true,
     versionKey: false,
@@ -46,6 +50,7 @@ export interface ProductProsp {
     recette: [];
     promotion? : PromotionProsp;
     receipts ? : IngredientProps[];
+    promote : boolean;
 }
 
 export type ProductDocument = ProductProsp & Document;

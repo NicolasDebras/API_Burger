@@ -19,6 +19,9 @@ const MenuSchema = new Schema({
     promotion : {
         type: Schema.Types.ObjectId,
         ref:"promotion"
+    },
+    promote : {
+        type: Schema.Types.Boolean
     }
 
 }, {
@@ -34,6 +37,7 @@ export interface MenuProsp {
     price: number;
     _id?: string;
     promotion? : PromotionProsp;
+    promote : boolean;
 }
 
 export type MenuDocument = MenuProsp & Document;

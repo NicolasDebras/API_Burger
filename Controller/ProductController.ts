@@ -11,13 +11,17 @@ export class  ProductController {
             res.status(400).end();
             return;
         }
+        if(!productBody.promote){
+            productBody.promote =0;
+        }
         try {
             const product = await ProductService.getInstance().createProduct({
                 name: productBody.name,
                 recette: productBody.recette,
                 price: productBody.price,
                 promotion: productBody.promotion,
-                receipts : productBody.receipts
+                receipts : productBody.receipts,
+                promote: productBody.promote
             });
             res.json(product);
         } catch (err){
@@ -60,12 +64,16 @@ export class  ProductController {
 
     async updateProduct(req: Request, res: Response){
         try {
+            if(!req.body.promote){
+                req.body.promote =0;
+            }
             const product = await ProductService.getInstance()
                 .updateById(req.params.product_id, req.body);
             if(!product){
                 res.status(404).end();
                 return;
             }
+
             res.json(product);
         }catch (err){
             res.status(400).end();
