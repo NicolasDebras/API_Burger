@@ -22,6 +22,7 @@ const PromotionController_1 = require("./Controller/PromotionController");
 const MenuController_1 = require("./Controller/MenuController");
 const auth_controller_1 = require("./Controller/auth.controller");
 const IngredientController_1 = require("./Controller/IngredientController");
+const ChatController_1 = require("./Controller/ChatController");
 function startServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const m = yield mongoose_1.default.connect(process.env.MONGO_URL, {
@@ -33,6 +34,8 @@ function startServer() {
         const app = (0, express_1.default)();
         const productController = new Controller_1.ProductController();
         app.use('/product', productController.buildRoutes());
+        const chatController = new ChatController_1.ChatController();
+        app.use('/chat', chatController.buildRoutes());
         const promotionController = new PromotionController_1.PromotionController();
         app.use('/promotion', promotionController.buildRoutes());
         const menuController = new MenuController_1.MenuController();

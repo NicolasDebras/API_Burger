@@ -19,4 +19,5 @@ __exportStar(require("../service/PromotionService"), exports);
 __exportStar(require("../service/Menuservice"), exports);
 __exportStar(require("../service/CommandeService"), exports);
 __exportStar(require("../service/auth.service"), exports);
+__exportStar(require("../service/ConversationService"), exports);
 //# sourceMappingURL=index.js.map

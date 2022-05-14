@@ -27,9 +27,10 @@ export class AuthService {
         }
         if (user.login){
             let LogInReturn = await this.getByLogin(user.login);
-            if (LogInReturn !== undefined){
+            //a corriger, empêche de créer un compte
+            /*if (LogInReturn !== undefined){
                 throw  new Error("The login is already taken");
-            }
+            }*/
         }
 
         if (user.restaurant ){

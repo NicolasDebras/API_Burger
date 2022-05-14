@@ -21,4 +21,6 @@ __exportStar(require("../model/CommandeModel"), exports);
 __exportStar(require("../model/RestaurantModel"), exports);
 __exportStar(require("../model/user_model"), exports);
 __exportStar(require("../model/session_model"), exports);
+__exportStar(require("../model/MessageModel"), exports);
+__exportStar(require("../model/ConversationModel"), exports);
 //# sourceMappingURL=index.js.map

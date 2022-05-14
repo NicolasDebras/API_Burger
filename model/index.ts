@@ -5,3 +5,5 @@ export * from "../model/CommandeModel";
 export * from "../model/RestaurantModel";
 export * from  "../model/user_model";
 export * from "../model/session_model"
+export * from "../model/MessageModel";
+export * from "../model/ConversationModel";
