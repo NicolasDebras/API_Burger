@@ -1,8 +1,6 @@
 import express, {Router, Request, Response} from "express";
 import {checkUserConnected} from "../middleware";
-import { checkUserRole } from "../middleware";
 import { ConversationService } from "../service/ConversationService";
-import { isPropertySignature } from "typescript";
 import { MessageProps } from "../model";
 
 export class ChatController{
@@ -60,53 +58,6 @@ export class ChatController{
         res.json(message);
     }
 
-
-/*
-    async getAllCommande(req: Request, res: Response){
-        const commande = await CommandeService.getInstance().getAll();
-        res.json(commande);
-    }
-
-    async getCommande(req: Request, res: Response){
-        try {
-            const commande = await CommandeService.getInstance().getById(req.params.commande_id);
-            if (commande === null){
-                res.status(404).end();
-                return;
-            }
-            res.json(commande);
-        }catch (err){
-            res.status(400).end();
-            return;
-        }
-    }
-
-    async deleteCommande(req: Request, res: Response){
-        try {
-            const success = await CommandeService.getInstance().deleteById(req.params.commande_id);
-            if (success){
-                res.status(204).end();
-            }else {
-                res.status(404).end();
-            }
-        }catch (err){
-            res.status(400).end();
-        }
-    }
-
-    async updateCommande(req: Request, res: Response){
-        try {
-            const commande = await CommandeService.getInstance()
-                .updateById(req.params.commande_id, req.body);
-            if(!commande){
-                res.status(404).end();
-                return;
-            }
-            res.json(commande);
-        }catch (err){
-            res.status(400).end();
-        }
-    }*/
 
     buildRoutes(): Router {
         const routeur = express.Router();
