@@ -1,6 +1,7 @@
 import express, {Router, Request, Response} from "express";
 import {MenuService} from "../service/Menuservice";
 import {checkUserConnected, checkUserRole} from "../middleware";
+import {Menu} from "../class/Menu";
 
 
 
@@ -14,6 +15,11 @@ export class MenuController {
         }
         if (!menuBody.promote){
             menuBody.promote = 0;
+        }
+        let test = await Menu.verifyMenu(menuBody);
+        if (!test){
+            res.status(400).end();
+            return;
         }
         try {
             const menu= await MenuService.getInstance().createMenu({

@@ -16,6 +16,7 @@ exports.MenuController = void 0;
 const express_1 = __importDefault(require("express"));
 const Menuservice_1 = require("../service/Menuservice");
 const middleware_1 = require("../middleware");
+const Menu_1 = require("../class/Menu");
 class MenuController {
     createMenu(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -26,6 +27,11 @@ class MenuController {
             }
             if (!menuBody.promote) {
                 menuBody.promote = 0;
+            }
+            let test = yield Menu_1.Menu.verifyMenu(menuBody);
+            if (!test) {
+                res.status(400).end();
+                return;
             }
             try {
                 const menu = yield Menuservice_1.MenuService.getInstance().createMenu({
