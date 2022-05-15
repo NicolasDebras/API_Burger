@@ -3,7 +3,9 @@ import { ProductProsp } from "./ProductModel";
 import { PromotionProsp } from "./PromotionModel";
 import { MenuProsp } from "./MenuModel";
 import { RestaurantProsp } from "./RestaurantModel";
+import { UserProps } from "./user_model";
 export interface CommandeProsp {
+    user?: UserProps;
     product?: ProductProsp[];
     menu?: MenuProsp[];
     price?: number;

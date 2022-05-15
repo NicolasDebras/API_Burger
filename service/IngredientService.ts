@@ -1,4 +1,5 @@
 import { IngredientModel, IngredientProps, IngredientDocument } from "../model/ingredientModel";
+import {UserDocument, UserModel} from "../model";
 
 export class IngredientService {
 
@@ -32,6 +33,11 @@ export class IngredientService {
     async deleteById(IngredientId: string): Promise<boolean>{
         const res = await IngredientModel.deleteOne({_id: IngredientId}).exec();
         return res.deletedCount === 1;
+    }
+
+    async verifIngredientProduct(IngredientId: string, RestaurantId: string): Promise<IngredientDocument| null >{
+        let ingredient  = await IngredientModel.findOne({ ingredient: IngredientId, restaurant: RestaurantId}).exec();
+        return ingredient;
     }
 
     async updateById(IngredientId: string, props: IngredientProps): Promise<IngredientDocument | null> {

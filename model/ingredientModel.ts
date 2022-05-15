@@ -5,21 +5,26 @@ import {RestaurantProsp} from "./RestaurantModel";
 const IngredientSchema = new Schema({
     name : {
         type: Schema.Types.String,
-        required: true,
     },
     restaurant : {
         type: Schema.Types.ObjectId,
         ref: "restaurant",
-        unique: true,
-        required: true,
     },
     price : {
         type: Schema.Types.Number,
     },
     quantity : {
         type: Schema.Types.Number,
-        Required: true,
     },
+    ingredient : {
+        type: Schema.Types.ObjectId,
+        ref: "Ingredient",
+        required: false
+    },
+    stock : {
+        type: Schema.Types.Boolean,
+        required: true
+    }
 }, {
     timestamps: true,
     versionKey: false,
@@ -28,11 +33,13 @@ const IngredientSchema = new Schema({
 );
 
 export interface IngredientProps {
-    name : string;
-    restaurant: RestaurantProsp;
-    price : number;
-    quantity : number;
+    name? : string;
+    restaurant?: RestaurantProsp;
+    price?: number;
+    quantity? : number;
     id? :string;
+    ingredient? : IngredientProps;
+    stock: boolean;
 }
 
 export type IngredientDocument = IngredientProps & Document;
