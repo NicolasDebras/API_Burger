@@ -39,6 +39,10 @@ export class IngredientService {
         let ingredient  = await IngredientModel.findOne({ ingredient: IngredientId, restaurant: RestaurantId}).exec();
         return ingredient;
     }
+    async IngredientModel(IngredientId: string, stock: boolean): Promise<IngredientDocument| null >{
+        let ingredient  = await IngredientModel.findOne({ ingredient: IngredientId, stock: stock}).exec();
+        return ingredient;
+    }
 
     async updateById(IngredientId: string, props: IngredientProps): Promise<IngredientDocument | null> {
         const Ingredient = await this.getById(IngredientId);

@@ -11,7 +11,7 @@ const ProductSchema = new Schema({
     recette :[ {
         ingredient: {
             type: Schema.Types.ObjectId,
-            ref: "ingredient",
+            ref: "Ingredient",
             unique: true
         },
         num: {
@@ -28,10 +28,6 @@ const ProductSchema = new Schema({
         ref:"promotion"
     },
 
-    receipts : [{
-        type: Schema.Types.ObjectId,
-        ref:"ingredient"
-    }],
     promote : {
         type: Schema.Types.Boolean
     }

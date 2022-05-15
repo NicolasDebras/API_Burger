@@ -17,6 +17,7 @@ const express_1 = __importDefault(require("express"));
 const ProductService_1 = require("../service/ProductService");
 const middleware_1 = require("../middleware");
 const middleware_2 = require("../middleware");
+const Product_1 = require("../class/Product");
 class ProductController {
     createProduct(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -26,20 +27,25 @@ class ProductController {
                 return;
             }
             if (!productBody.promote) {
-                productBody.promote = 0;
+                productBody.promote = false;
             }
             try {
+                let test = yield Product_1.Product.verifGoodIngredient(productBody.recette);
+                if (!test) {
+                    throw new Error("An ingredient does not exist");
+                }
+                console.log("hello");
                 const product = yield ProductService_1.ProductService.getInstance().createProduct({
                     name: productBody.name,
                     recette: productBody.recette,
                     price: productBody.price,
                     promotion: productBody.promotion,
-                    receipts: productBody.receipts,
                     promote: productBody.promote
                 });
                 res.json(product);
             }
             catch (err) {
+                console.log(err);
                 res.status(400).end();
                 return;
             }

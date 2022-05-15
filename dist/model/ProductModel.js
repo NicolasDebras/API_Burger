@@ -34,7 +34,7 @@ const ProductSchema = new mongoose_1.Schema({
     recette: [{
             ingredient: {
                 type: mongoose_1.Schema.Types.ObjectId,
-                ref: "ingredient",
+                ref: "Ingredient",
                 unique: true
             },
             num: {
@@ -50,10 +50,6 @@ const ProductSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "promotion"
     },
-    receipts: [{
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "ingredient"
-        }],
     promote: {
         type: mongoose_1.Schema.Types.Boolean
     }

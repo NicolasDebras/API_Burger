@@ -2,25 +2,31 @@ import express, {Router, Request, Response} from "express";
 import {ProductService} from "../service/ProductService";
 import {checkUserConnected} from "../middleware";
 import { checkUserRole } from "../middleware";
+import {Product} from "../class/Product";
 
 export class  ProductController {
 
     async createProduct( req: Request, res: Response) {
         const productBody = req.body;
-        if (!productBody.name || ! productBody.price || !productBody.recette ){
+        if (!productBody.name || ! productBody.price || !productBody.recette){
             res.status(400).end();
             return;
         }
+
         if(!productBody.promote){
-            productBody.promote =0;
+            productBody.promote =false;
         }
+
         try {
+            let test = await  Product.verifGoodIngredient(productBody.recette);
+            if (!test){
+                throw new Error("An ingredient does not exist");
+            }
             const product = await ProductService.getInstance().createProduct({
                 name: productBody.name,
                 recette: productBody.recette,
                 price: productBody.price,
                 promotion: productBody.promotion,
-                receipts : productBody.receipts,
                 promote: productBody.promote
             });
             res.json(product);
