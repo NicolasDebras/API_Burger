@@ -34,7 +34,7 @@ class ProductController {
                 if (!test) {
                     throw new Error("An ingredient does not exist");
                 }
-                console.log("hello");
+                console.log(productBody.recette);
                 const product = yield ProductService_1.ProductService.getInstance().createProduct({
                     name: productBody.name,
                     recette: productBody.recette,
@@ -45,7 +45,6 @@ class ProductController {
                 res.json(product);
             }
             catch (err) {
-                console.log(err);
                 res.status(400).end();
                 return;
             }

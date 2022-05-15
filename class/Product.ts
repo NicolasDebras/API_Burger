@@ -63,7 +63,7 @@ export class Product {
         let success;
         if (recette ){
             for(let i=0; i<recette?.length; i++){
-                 success = await IngredientService.getInstance().getById(String(recette[i][0]));
+                 success = await IngredientService.getInstance().getById(String(recette[i]["ingredient"]));
                  if (!success || success.stock==true){
                      return false;
                  }

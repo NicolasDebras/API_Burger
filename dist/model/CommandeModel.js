@@ -36,11 +36,11 @@ const CommandeSchema = new mongoose_1.Schema({
     },
     product: [{
             type: mongoose_1.Schema.Types.ObjectId,
-            required: true
+            ref: "product"
         }],
     menu: [{
             type: mongoose_1.Schema.Types.ObjectId,
-            required: true
+            ref: "menu"
         }],
     price: {
         type: mongoose_1.Schema.Types.Number,
@@ -54,7 +54,7 @@ const CommandeSchema = new mongoose_1.Schema({
     restaurant: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "restaurant"
-    }
+    },
 }, {
     timestamps: true,
     versionKey: false,

@@ -17,11 +17,11 @@ const CommandeSchema = new Schema({
         },
         product : [{
             type: Schema.Types.ObjectId,
-            required:true
+            ref: "product"
         }], // "]" -> permert de faire un tableau
         menu : [{
             type: Schema.Types.ObjectId,
-            required:true
+            ref: "menu"
         }],
         price : {
             type: Schema.Types.Number,
@@ -35,7 +35,8 @@ const CommandeSchema = new Schema({
         restaurant : {
             type: Schema.Types.ObjectId,
             ref:"restaurant"
-        }
+        },
+
 
     }, {
         timestamps: true,
