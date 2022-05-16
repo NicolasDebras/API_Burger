@@ -1,5 +1,5 @@
 import { IngredientModel, IngredientProps, IngredientDocument } from "../model/ingredientModel";
-import {UserDocument, UserModel} from "../model";
+import {CommandeModel, CommandeProsp, UserDocument, UserModel} from "../model";
 
 export class IngredientService {
 
@@ -39,6 +39,7 @@ export class IngredientService {
         let ingredient  = await IngredientModel.findOne({ ingredient: IngredientId, restaurant: RestaurantId}).exec();
         return ingredient;
     }
+
     async IngredientRestaurant(IngredientId: string, RestaurantId: string): Promise<IngredientDocument| null >{
         let ingredient  = await IngredientModel.findOne({ ingredient: IngredientId, restaurant: RestaurantId}).exec();
         return ingredient;
@@ -57,5 +58,15 @@ export class IngredientService {
         }
         const res = await Ingredient.save();
         return res;
+    }
+
+    async UpdateQuantity(quantity: number, IngredientId: string): Promise< boolean> {
+        const filter = { _id: IngredientId};
+        const update = { quantity: quantity };
+        let doc = await IngredientModel.findOneAndUpdate(filter, update);
+        if (doc){
+            return true;
+        }
+        return false;
     }
 }

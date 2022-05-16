@@ -8,12 +8,25 @@ import {log} from "util";
 
 export class Product {
 
-    public static async supIngredient(dictionnaryCommande: Map<string, number>) {
+    public static async supIngredient(dictionnaryCommande: Map<string, number>, restaurantId: string): Promise<boolean >{
         for (let  [key, val] of dictionnaryCommande){
-            let version = await IngredientService.getInstance().getById(key);
-            version.quantity = version.quantity - val;
-            await version.save();
+            let version = await IngredientService.getInstance().verifIngredientProduct(key, restaurantId);
+            if (version?.quantity){
+                version.quantity = version.quantity - val;
+                let result = await IngredientService.getInstance().UpdateQuantity(version.quantity, String(version.id))
+                if (result){
+                    const ingredient = await IngredientService.getInstance().getById(String(version.id));
+                    if (!ingredient){
+                        return false
+                    }
+                }else{
+                    return false;
+                }
+            }else{
+                return false;
+            }
         }
+        return  true;
     }
 
     private static  async productCompt(dictionnaryCommande: Map<string, number>, dictionnaryStock: Map<string, number> , product: ProductProsp[], restaurantId: RestaurantProsp){

@@ -8,4 +8,5 @@ export declare class CommandeService {
     getById(idCommande: string): Promise<any>;
     deleteById(commandeId: string): Promise<boolean>;
     updateById(commandeId: string, props: CommandeProsp): Promise<CommandeDocument | null>;
+    UpdateOne(commande: CommandeProsp, commandeId: String): Promise<boolean>;
 }

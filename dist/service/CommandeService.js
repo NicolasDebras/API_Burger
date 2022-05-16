@@ -54,6 +54,7 @@ class CommandeService {
     }
     updateById(commandeId, props) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log(props);
             const commande = yield this.getById(commandeId);
             if (!commande) {
                 return null;
@@ -78,6 +79,17 @@ class CommandeService {
             }
             const res = yield commande.save();
             return res;
+        });
+    }
+    UpdateOne(commande, commandeId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const filter = { _id: commandeId };
+            const update = { state: commande.state };
+            let doc = yield model_1.CommandeModel.findOneAndUpdate(filter, update);
+            if (doc) {
+                return true;
+            }
+            return false;
         });
     }
 }

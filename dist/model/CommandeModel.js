@@ -30,6 +30,10 @@ const CommandeSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "User"
     },
+    livreur: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "User"
+    },
     nbrCommande: {
         type: mongoose_1.Schema.Types.String,
         required: true

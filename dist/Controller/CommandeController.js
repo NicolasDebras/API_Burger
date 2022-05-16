@@ -17,6 +17,7 @@ const express_1 = __importDefault(require("express"));
 const service_1 = require("../service");
 const middleware_1 = require("../middleware");
 const middleware_2 = require("../middleware");
+const Product_1 = require("../class/Product");
 const Commande_1 = require("../class/Commande");
 class CommandeController {
     createCommande(req, res) {
@@ -117,6 +118,51 @@ class CommandeController {
             }
         });
     }
+    stateUpdateCommande(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                if (req.params.state === "prepared") {
+                    let commande = yield service_1.CommandeService.getInstance().getById(req.params.commande_id);
+                    commande.state = req.params.state;
+                    if (commande) {
+                        const save = yield service_1.CommandeService.getInstance().UpdateOne(commande, commande._id);
+                        if (save) {
+                            commande = yield service_1.CommandeService.getInstance().getById(req.params.commande_id);
+                            if (commande) {
+                                let response = yield Product_1.Product.enoughIngredient(commande);
+                                if (response === null || response === void 0 ? void 0 : response.size) {
+                                    let result = yield Product_1.Product.supIngredient(response, commande.restaurant);
+                                    if (result) {
+                                        commande = yield service_1.CommandeService.getInstance().getById(req.params.commande_id);
+                                        if (!commande) {
+                                            res.status(404).end();
+                                            return;
+                                        }
+                                        res.json(commande);
+                                    }
+                                }
+                                else {
+                                    throw new Error("The response doesn't size");
+                                }
+                            }
+                            else {
+                                throw new Error("Commande don't find");
+                            }
+                        }
+                        else {
+                            throw new Error("The Update don't work");
+                        }
+                    }
+                    else {
+                        throw new Error("Commande don't find");
+                    }
+                }
+            }
+            catch (err) {
+                res.status(400).end();
+            }
+        });
+    }
     buildRoutes() {
         const routeur = express_1.default.Router();
         routeur.use((0, middleware_1.checkUserConnected)());
@@ -125,6 +171,7 @@ class CommandeController {
         routeur.get('/:commande_id', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur", "livreur"]), this.getCommande.bind(this));
         routeur.delete('/:commande_id', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "livreur"]), this.deleteCommande.bind(this));
         routeur.put('/:commande_id', express_1.default.json(), (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur"]), this.updateCommande.bind(this));
+        routeur.get('/:commande_id/:state/', express_1.default.json(), (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur", "livreur"]), this.stateUpdateCommande.bind(this));
         return routeur;
     }
 }

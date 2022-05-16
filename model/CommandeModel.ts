@@ -11,6 +11,10 @@ const CommandeSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: "User"
         },
+        livreur:{
+            type: Schema.Types.ObjectId,
+            ref: "User"
+        },
         nbrCommande: {
             type: Schema.Types.String,
             required: true

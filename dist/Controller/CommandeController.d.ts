@@ -5,5 +5,6 @@ export declare class CommandeController {
     getCommande(req: Request, res: Response): Promise<void>;
     deleteCommande(req: Request, res: Response): Promise<void>;
     updateCommande(req: Request, res: Response): Promise<void>;
+    stateUpdateCommande(req: Request, res: Response): Promise<void>;
     buildRoutes(): Router;
 }

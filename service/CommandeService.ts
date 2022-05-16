@@ -38,7 +38,6 @@ export class CommandeService{
     }
 
 
-
     async getAll(): Promise<CommandeDocument[]> {
         return CommandeModel.find().exec();
     }
@@ -53,6 +52,7 @@ export class CommandeService{
     }
 
     async updateById(commandeId: string, props: CommandeProsp): Promise<CommandeDocument | null> {
+        console.log(props)
         const commande = await this.getById(commandeId);
         if(!commande){
             return null;
@@ -78,4 +78,16 @@ export class CommandeService{
         const res = await commande.save();
         return res;
     }
+
+    async UpdateOne(commande: CommandeProsp, commandeId: String): Promise<boolean>{
+        const filter = { _id: commandeId};
+        const update = { state: commande.state };
+        let doc = await CommandeModel.findOneAndUpdate(filter, update);
+        if (doc){
+            return true;
+        }
+        return false;
+    }
+
+
 }

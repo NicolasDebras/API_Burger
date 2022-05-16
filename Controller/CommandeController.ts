@@ -96,6 +96,45 @@ export class CommandeController{
         }
     }
 
+    async stateUpdateCommande(req: Request, res: Response){
+        try {
+            if (req.params.state=== "prepared") {
+                let commande = await CommandeService.getInstance().getById(req.params.commande_id);
+                commande.state = req.params.state;
+                if (commande) {
+                    const save = await CommandeService.getInstance().UpdateOne(commande, commande._id)
+                    if (save) {
+                        commande = await CommandeService.getInstance().getById(req.params.commande_id);
+                        if (commande) {
+                            let response = await Product.enoughIngredient(commande);
+                            if (response?.size) {
+                                let result =  await Product.supIngredient(response, commande.restaurant);
+                                if (result){
+                                    commande = await CommandeService.getInstance().getById(req.params.commande_id);
+                                    if(!commande){
+                                        res.status(404).end();
+                                        return;
+                                    }
+                                    res.json(commande);
+                                }
+                            }else{
+                                throw new Error("The response doesn't size");
+                            }
+                        }else{
+                            throw new Error("Commande don't find");
+                        }
+                    }else{
+                        throw new Error("The Update don't work");
+                    }
+                }else{
+                    throw new Error("Commande don't find");
+                }
+            }
+        }catch (err){
+            res.status(400).end();
+        }
+    }
+
     buildRoutes(): Router {
         const routeur = express.Router();
         routeur.use(checkUserConnected());
@@ -104,6 +143,7 @@ export class CommandeController{
         routeur.get('/:commande_id',checkUserRole(["admin", "bigBoss", "preparateur", "livreur"]), this.getCommande.bind(this));
         routeur.delete('/:commande_id',checkUserRole(["admin", "bigBoss", "livreur"]),  this.deleteCommande.bind(this));
         routeur.put('/:commande_id', express.json(),checkUserRole(["admin", "bigBoss", "preparateur"]),  this.updateCommande.bind(this));
+        routeur.get('/:commande_id/:state/', express.json(),checkUserRole(["admin", "bigBoss", "preparateur", "livreur"]),  this.stateUpdateCommande.bind(this));
         return routeur;
     }
 }
