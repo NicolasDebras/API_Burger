@@ -1,26 +1,45 @@
 import express, {Router, Request, Response} from "express";
-import {CommandeService} from "../service";
+import {AuthService, CommandeService} from "../service";
 import {checkUserConnected} from "../middleware";
 import { checkUserRole } from "../middleware";
 import {Product} from "../class/Product";
+import {Commande} from "../class/Commande";
 
 export class CommandeController{
     async createCommande(req: Request, res: Response){
 
         const commandeBody = req.body;
-        if (!commandeBody === null || !commandeBody.restaurant || !commandeBody.user ){
+        if (!commandeBody === null || !commandeBody.restaurant  ){
             res.status(401).end();
             return;
         }
+        let bearer= req.rawHeaders[1].split(" ");
+        const connected = await AuthService.getInstance().getById(bearer[1]);
+        if (connected?.role == "customer"){
+            commandeBody.user = connected._id;
+        }else if (connected?.role != "customer" && !commandeBody.user){
+            return ;
+        }
         try {
+            let priceCommande=0;
+
+            if (commandeBody.product || commandeBody.menu){
+                 priceCommande =+ await Commande.priceCommande(commandeBody.product, commandeBody.menu);
+                if (!priceCommande){
+                    throw new Error("the price cannot be calculated");
+                }
+            }else{
+                throw new Error("the price cannot be calculated");
+            }
 
             const commande = await CommandeService.getInstance().createCommande({
                 user: commandeBody.user,
                 product: commandeBody.product,
                 menu: commandeBody.menu,
-                price: commandeBody.price,
+                price: priceCommande,
                 promotion: commandeBody.promotion,
-                restaurant: commandeBody.restaurant
+                restaurant: commandeBody.restaurant,
+                state: "start",
             });
 
             res.json(commande);
@@ -80,7 +99,7 @@ export class CommandeController{
     buildRoutes(): Router {
         const routeur = express.Router();
         routeur.use(checkUserConnected());
-        routeur.post('/', express.json(), this.createCommande.bind(this));
+        routeur.post('/',checkUserRole(["admin", "bigBoss", "preparateur", "customer"]) , express.json(), this.createCommande.bind(this));
         routeur.get('/',checkUserRole(["admin", "bigBoss", "preparateur"]),  this.getAllCommande.bind(this));
         routeur.get('/:commande_id',checkUserRole(["admin", "bigBoss", "preparateur", "livreur"]), this.getCommande.bind(this));
         routeur.delete('/:commande_id',checkUserRole(["admin", "bigBoss", "livreur"]),  this.deleteCommande.bind(this));

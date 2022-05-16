@@ -39,8 +39,8 @@ export class IngredientService {
         let ingredient  = await IngredientModel.findOne({ ingredient: IngredientId, restaurant: RestaurantId}).exec();
         return ingredient;
     }
-    async IngredientModel(IngredientId: string, stock: boolean): Promise<IngredientDocument| null >{
-        let ingredient  = await IngredientModel.findOne({ ingredient: IngredientId, stock: stock}).exec();
+    async IngredientRestaurant(IngredientId: string, RestaurantId: string): Promise<IngredientDocument| null >{
+        let ingredient  = await IngredientModel.findOne({ ingredient: IngredientId, restaurant: RestaurantId}).exec();
         return ingredient;
     }
 
@@ -51,9 +51,6 @@ export class IngredientService {
         }
         if(props.name !== undefined){
             Ingredient.name = props.name;
-        }
-        if (props.price !== undefined){
-            Ingredient.price = props.price;
         }
         if (props.quantity !== undefined){
             Ingredient.promotion = props.quantity;

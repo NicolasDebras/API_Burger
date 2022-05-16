@@ -8,11 +8,11 @@ export interface CommandeProsp {
     user?: UserProps;
     product?: ProductProsp[];
     menu?: MenuProsp[];
-    price?: number;
-    _id?: string;
+    price: number;
     promotion?: PromotionProsp;
-    restaurant?: RestaurantProsp;
+    restaurant: RestaurantProsp;
     nbrCommande?: string;
+    state: String;
 }
 export declare type CommandeDocument = CommandeProsp & Document;
 export declare const CommandeModel: mongoose.Model<any, {}, {}, {}>;

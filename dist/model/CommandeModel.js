@@ -55,6 +55,9 @@ const CommandeSchema = new mongoose_1.Schema({
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "restaurant"
     },
+    state: {
+        type: mongoose_1.Schema.Types.String
+    }
 }, {
     timestamps: true,
     versionKey: false,

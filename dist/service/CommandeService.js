@@ -10,10 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandeService = void 0;
-const ProductService_1 = require("./ProductService");
 const model_1 = require("../model");
-const PromotionService_1 = require("./PromotionService");
-const Menuservice_1 = require("./Menuservice");
 const Product_1 = require("../class/Product");
 class CommandeService {
     constructor() {
@@ -27,58 +24,13 @@ class CommandeService {
     createCommande(props) {
         return __awaiter(this, void 0, void 0, function* () {
             let test = yield Product_1.Product.enoughIngredient(props);
-            if (test.size > 0) {
-                Product_1.Product.supIngredient(test);
-            }
             let max = 7000000;
             let min = 1;
             let nbr = (Math.random() * (max - min) + min) | 0;
             props.nbrCommande = "CB" + nbr;
-            props.price = yield this.priceCommande(props);
             const model = new model_1.CommandeModel(props);
             const commande = yield model.save();
             return commande;
-        });
-    }
-    priceCommande(props) {
-        var _a, _b;
-        return __awaiter(this, void 0, void 0, function* () {
-            let i;
-            let products = props.product;
-            let menus = props.menu;
-            let price;
-            price = 0;
-            if (products !== undefined) {
-                for (i = 0; i < (products === null || products === void 0 ? void 0 : products.length); i++) {
-                    let product = String(products[i]);
-                    const product1 = yield ProductService_1.ProductService.getInstance().getById(product);
-                    if (product1) {
-                        const promotion1 = yield PromotionService_1.PromotionService.getInstance().getById(String((_a = product1.promotion) === null || _a === void 0 ? void 0 : _a._id));
-                        if ((promotion1 === null || promotion1 === void 0 ? void 0 : promotion1.percentage) !== undefined) {
-                            price = price + (product1.price - product1.price * (promotion1 === null || promotion1 === void 0 ? void 0 : promotion1.percentage) / 100);
-                        }
-                        else {
-                            price = price + product1.price;
-                        }
-                    }
-                }
-            }
-            if (menus !== undefined) {
-                for (i = 0; i < (menus === null || menus === void 0 ? void 0 : menus.length); i++) {
-                    let menu = String(menus[i]);
-                    const menu1 = yield Menuservice_1.MenuService.getInstance().getById(menu);
-                    if (menu1 !== undefined) {
-                        const promotion1 = yield PromotionService_1.PromotionService.getInstance().getById(String((_b = menu1.promotion) === null || _b === void 0 ? void 0 : _b._id));
-                        if ((promotion1 === null || promotion1 === void 0 ? void 0 : promotion1.percentage) !== undefined) {
-                            price = price + (menu1.price - menu1.price * (menu1 === null || menu1 === void 0 ? void 0 : menu1.percentage) / 100);
-                        }
-                        else {
-                            price = price + menu1.price;
-                        }
-                    }
-                }
-            }
-            return price;
         });
     }
     getAll() {

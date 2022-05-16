@@ -33,7 +33,7 @@ class ProductService {
     }
     getById(productId) {
         return __awaiter(this, void 0, void 0, function* () {
-            return model_1.ProductModel.findById(productId).exec();
+            return model_1.ProductModel.findById(String(productId)).exec();
         });
     }
     deleteById(productId) {

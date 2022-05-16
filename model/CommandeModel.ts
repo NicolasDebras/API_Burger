@@ -36,6 +36,9 @@ const CommandeSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref:"restaurant"
         },
+        state : {
+            type: Schema.Types.String
+        }
 
 
     }, {
@@ -49,11 +52,11 @@ export interface CommandeProsp {
     user?: UserProps;
     product?: ProductProsp[];
     menu?: MenuProsp[];
-    price?: number;
-    _id?: string;
+    price: number;
     promotion? : PromotionProsp;
-    restaurant? : RestaurantProsp;
+    restaurant : RestaurantProsp;
     nbrCommande?: string;
+    state: String;
 }
 
 export type CommandeDocument = CommandeProsp & Document;

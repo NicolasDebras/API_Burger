@@ -27,7 +27,6 @@ export class IngredientController {
                 ingredient= await IngredientService.getInstance().createIngredient( {
                     name: IngredientBody.name,
                     stock: IngredientBody.stock,
-                    price: IngredientBody.price,
                 } ) ;
             }else{
                 let verif = await IngredientService.getInstance().getById(IngredientBody.ingredient);

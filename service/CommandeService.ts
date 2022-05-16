@@ -5,6 +5,7 @@ import {PromotionService} from "./PromotionService";
 import {Schema} from "mongoose";
 import {MenuService} from "./Menuservice";
 import {Product} from "../class/Product";
+import {Commande} from "../class/Commande";
 
 
 
@@ -23,57 +24,17 @@ export class CommandeService{
     }
 
     public async createCommande(props: CommandeProsp): Promise<CommandeDocument>{
-        let test = await  Product.enoughIngredient(props);
-        if (test.size >0 ){
-            Product.supIngredient(test);
-        }
+        //let test = await  Product.enoughIngredient(props);
         let max = 7000000;
         let min = 1;
         let nbr = (Math.random() * (max - min) + min) | 0 ;
         props.nbrCommande = "CB" + nbr;
-        props.price = await this.priceCommande(props);
         const model = new CommandeModel(props);
         const commande = await model.save();
         return commande;
     }
 
-    async priceCommande(props: CommandeProsp): Promise<number>{
-        let i: number;
-        let products = props.product;
-        let menus = props.menu;
-        let price: number ;
-        price = 0;
-        if( products !== undefined){
-            for(i=0; i<products?.length; i++){
-                let product = String(products[i]);
-                const product1 = await ProductService.getInstance().getById(product);
-                if (product1) {
-                    const promotion1 = await  PromotionService.getInstance().getById(String(product1.promotion?._id));
-                    if (promotion1?.percentage !== undefined) {
-                        price = price + (product1.price - product1.price  *  promotion1?.percentage / 100);
-                    } else {
-                        price = price + product1.price ;
-                    }
-                }
-            }
-        }
-        if( menus !== undefined){
-            for(i=0; i<menus?.length; i++){
-                let menu = String(menus[i]);
-                const menu1 = await MenuService.getInstance().getById(menu);
-                if (menu1 !== undefined ) {
-                    const promotion1 = await  PromotionService.getInstance().getById(String(menu1.promotion?._id));
-                    if (promotion1?.percentage !== undefined) {
-                        price = price + (menu1.price - menu1.price  *  menu1?.percentage / 100);
-                    } else {
-                        price = price + menu1.price ;
-                    }
-                }
-            }
-        }
-        return price;
 
-    }
 
     async getAll(): Promise<CommandeDocument[]> {
         return CommandeModel.find().exec();

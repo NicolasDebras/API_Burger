@@ -17,22 +17,42 @@ const express_1 = __importDefault(require("express"));
 const service_1 = require("../service");
 const middleware_1 = require("../middleware");
 const middleware_2 = require("../middleware");
+const Commande_1 = require("../class/Commande");
 class CommandeController {
     createCommande(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const commandeBody = req.body;
-            if (!commandeBody === null || !commandeBody.restaurant || !commandeBody.user) {
+            if (!commandeBody === null || !commandeBody.restaurant) {
                 res.status(401).end();
                 return;
             }
+            let bearer = req.rawHeaders[1].split(" ");
+            const connected = yield service_1.AuthService.getInstance().getById(bearer[1]);
+            if ((connected === null || connected === void 0 ? void 0 : connected.role) == "customer") {
+                commandeBody.user = connected._id;
+            }
+            else if ((connected === null || connected === void 0 ? void 0 : connected.role) != "customer" && !commandeBody.user) {
+                return;
+            }
             try {
+                let priceCommande = 0;
+                if (commandeBody.product || commandeBody.menu) {
+                    priceCommande = +(yield Commande_1.Commande.priceCommande(commandeBody.product, commandeBody.menu));
+                    if (!priceCommande) {
+                        throw new Error("the price cannot be calculated");
+                    }
+                }
+                else {
+                    throw new Error("the price cannot be calculated");
+                }
                 const commande = yield service_1.CommandeService.getInstance().createCommande({
                     user: commandeBody.user,
                     product: commandeBody.product,
                     menu: commandeBody.menu,
-                    price: commandeBody.price,
+                    price: priceCommande,
                     promotion: commandeBody.promotion,
-                    restaurant: commandeBody.restaurant
+                    restaurant: commandeBody.restaurant,
+                    state: "start",
                 });
                 res.json(commande);
             }
@@ -100,7 +120,7 @@ class CommandeController {
     buildRoutes() {
         const routeur = express_1.default.Router();
         routeur.use((0, middleware_1.checkUserConnected)());
-        routeur.post('/', express_1.default.json(), this.createCommande.bind(this));
+        routeur.post('/', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur", "customer"]), express_1.default.json(), this.createCommande.bind(this));
         routeur.get('/', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur"]), this.getAllCommande.bind(this));
         routeur.get('/:commande_id', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "preparateur", "livreur"]), this.getCommande.bind(this));
         routeur.delete('/:commande_id', (0, middleware_2.checkUserRole)(["admin", "bigBoss", "livreur"]), this.deleteCommande.bind(this));

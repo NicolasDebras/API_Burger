@@ -10,9 +10,6 @@ const IngredientSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "restaurant",
     },
-    price : {
-        type: Schema.Types.Number,
-    },
     quantity : {
         type: Schema.Types.Number,
     },
@@ -35,7 +32,6 @@ const IngredientSchema = new Schema({
 export interface IngredientProps {
     name? : string;
     restaurant?: RestaurantProsp;
-    price?: number;
     quantity? : number;
     id? :string;
     ingredient? : IngredientProps;

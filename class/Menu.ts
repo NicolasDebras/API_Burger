@@ -1,5 +1,5 @@
 import {MenuProsp} from "../model";
-import {ProductService, PromotionService} from "../service";
+import {MenuService, ProductService, PromotionService} from "../service";
 
 export class Menu {
     public static async verifyMenu(props: MenuProsp): Promise<boolean>{
@@ -22,5 +22,20 @@ export class Menu {
         }
 
         return true;
+    }
+
+    public static async menuPrice(menu: []): Promise<number | boolean >{
+        let verif;
+        let price=0;
+        if (menu){
+            for (let i=0; i<menu.length; i++){
+                verif = await MenuService.getInstance().getById(String(menu[i]));
+                if (!verif){
+                    throw new Error("the price cannot be calculated");
+                }
+                price = price + verif.price;
+            }
+        }
+        return price;
     }
 }

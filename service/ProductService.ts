@@ -22,7 +22,7 @@ export class ProductService{
     }
 
     async getById(productId: string): Promise<ProductDocument | null > {
-        return ProductModel.findById(productId).exec();
+        return ProductModel.findById(String(productId)).exec();
     }
 
     async deleteById(productId: string): Promise<boolean> {
