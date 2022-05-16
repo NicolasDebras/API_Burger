@@ -23,7 +23,7 @@ export class Product {
             if (info?.recette !== undefined){
                 let  recette = info.recette;
                 for(let y=0; y < recette.length; y++){
-                    let ingredient = await IngredientService.getInstance().IngredientRestaurant(recette[y]["ingredient"], restaurantId.id);
+                    let ingredient = await IngredientService.getInstance().IngredientRestaurant(String(recette[y]["ingredient"]), String(restaurantId));
                     if (ingredient) {
                         let quantity = Number(ingredient["quantity"]);
                         let objectId = String(recette[y]['ingredient']);
@@ -33,6 +33,7 @@ export class Product {
 
                 }
             }
+
         }
 
     }
@@ -43,13 +44,11 @@ export class Product {
         if (props.product !== undefined) {
             await this.productCompt(dictionnaryCommande, dictionnaryStock, props.product, props.restaurant);
         }
-
         if (props.menu !== undefined) {
             for (let i = 0; i < props.menu.length; i++) {
-                let products =  await  MenuService.getInstance().getById(String(props.menu[i]));
-                let change: string[] = products.product
-               for (let y= 0; y < change.length; y++){
-                    await this.productCompt(dictionnaryCommande, dictionnaryStock, props.menu[i].product, props.restaurant);
+                let menu=  await  MenuService.getInstance().getById(String(props.menu[i]));
+               for (let y= 0; y < menu.product.length; y++){
+                    await this.productCompt(dictionnaryCommande, dictionnaryStock, menu.product[y], props.restaurant);
                 }
 
             }

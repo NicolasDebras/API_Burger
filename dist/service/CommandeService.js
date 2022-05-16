@@ -24,6 +24,9 @@ class CommandeService {
     createCommande(props) {
         return __awaiter(this, void 0, void 0, function* () {
             let test = yield Product_1.Product.enoughIngredient(props);
+            if ((test === null || test === void 0 ? void 0 : test.size) == 0) {
+                throw new Error("Error commande");
+            }
             let max = 7000000;
             let min = 1;
             let nbr = (Math.random() * (max - min) + min) | 0;

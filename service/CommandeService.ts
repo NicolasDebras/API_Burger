@@ -24,7 +24,10 @@ export class CommandeService{
     }
 
     public async createCommande(props: CommandeProsp): Promise<CommandeDocument>{
-        //let test = await  Product.enoughIngredient(props);
+        let test = await  Product.enoughIngredient(props);
+        if(test?.size == 0){
+            throw new Error("Error commande");
+        }
         let max = 7000000;
         let min = 1;
         let nbr = (Math.random() * (max - min) + min) | 0 ;
