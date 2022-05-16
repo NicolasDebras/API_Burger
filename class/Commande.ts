@@ -15,8 +15,12 @@ export class Commande {
         if (product){
             priceProduct = await Product.productPrice(product);
         }
-        if(typeof(priceMenu)== "number" &&  typeof(priceProduct)=="number"){
-            return priceMenu + 0;
+        if (typeof(priceMenu)=="number" && typeof(priceProduct)=="number"){
+            return priceMenu + priceProduct;
+        }else if (typeof(priceMenu)!="number" && typeof(priceProduct)=="number"){
+            return priceProduct;
+        }else if (typeof(priceMenu)=="number" && typeof(priceProduct)!="number"){
+            return priceMenu;
         }
         return false;
     }
