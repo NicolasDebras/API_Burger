@@ -24,7 +24,8 @@ export class AuthService {
         }
         if (user.login){
             let LogInReturn = await this.getByLogin(user.login);
-            if (LogInReturn !== undefined){
+            console.log(LogInReturn)
+            if (LogInReturn ){
                 throw  new Error("The login is already taken");
             }
         }
