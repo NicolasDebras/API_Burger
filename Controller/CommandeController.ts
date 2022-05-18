@@ -24,7 +24,11 @@ export class CommandeController{
             let priceCommande=0;
 
             if (commandeBody.product || commandeBody.menu){
-                 priceCommande =+ await Commande.priceCommande(commandeBody.product, commandeBody.menu);
+                if (commandeBody.promotion){
+                    priceCommande =+ await Commande.priceCommandePromotion(commandeBody.product, commandeBody.menu, commandeBody.promotion);
+                }else {
+                    priceCommande =+ await Commande.priceCommande(commandeBody.product, commandeBody.menu);
+                }
                 if (!priceCommande){
                     throw new Error("the price cannot be calculated");
                 }

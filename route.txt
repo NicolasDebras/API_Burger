@@ -1,0 +1,180 @@
+API BURGER
+POSTMAN  ENVIRONNEMENT
+PROD
+URL : https://nodejs-api-burger.herokuapp.com/
+Local
+URL: http://localhost:3000/
+
+bigboss connecte:
+route: POST {{URL}}auth/login
+{
+    "login":"aristide",
+    "password":"aristide"
+}
+
+
+bigboss cree un restaurant
+route: POST {{URL}}/rest
+
+{
+	"name": "test",
+	"Cordlat": 121,
+	"Cordlong": 123,
+	"user": "ObjectId user",
+	"stock": mais on en a plus besoin donc a supprimer
+}
+
+
+bigboss cree un admin
+route: POST {{URL}}auth/subscribe
+
+{
+    "login": "aristide1",
+    "password": "aristide",
+    "role": "admin",
+    "restaurant": "ObjectId restaurant"
+}
+
+
+admin il se connecte
+
+route: POST {{URL}}auth/login
+{
+    "login":"aristide1",
+    "password":"aristide"
+}
+
+admin cree des ungredient
+
+route: POST {{URL}}ingredient/
+
+Ingredient model
+
+{
+	"name": "hello",
+	"stock": false
+}
+
+Ingredient stock
+{
+    "stock": true,
+    "quantity": 100,
+    "ingredient": "ObjectId ingredient model",
+    "restaurant": "ObjectId  restaurant"
+}
+
+
+
+admin cree un produi't (burger)
+
+route: POST {{URL}}product/
+
+Les produits ne prennent que des ingredients model
+{
+    "name": "test",
+    "price": 13,
+    "recette":[
+        {
+            "ingredient":"Object Id model",
+            "num":12 #nombre d'ingredient
+        }
+    ],
+    "promote": true
+}
+
+
+
+admin crée menu
+
+route: POST {{URL}}menu
+
+{
+    "name": "test",
+    "price": 12,
+    "product": [
+        "Object Id product"
+    ],
+    "promote": true
+}
+
+
+admin crée un preparateur
+route: POST {{URL}}auth/subscribe
+
+{
+    "login": "aristide2",
+    "password": "aristide",
+    "role": "preparateur",
+    "restaurant": "ObjectId restaurant"
+}
+
+
+admin crée une promotion
+Une promotion n'est pas lier a un restaurant
+route: POST {{URL}}promotion
+
+{
+  "name": "promotion"
+  "percentage": 10
+}
+
+
+client crée un compte
+route: POST {{URL}}auth/subscribe
+
+{
+    "login": "aristide3",
+    "password": "aristide",
+    "role": "customer"
+}
+il se connect
+route: POST {{URL}}auth/login
+{
+    "login":"aristide3",
+    "password":"aristide"
+}
+
+passe une commande
+route: POST {{URL}}commande/
+Sans promotion :
+
+{
+    "user": "Object Id user ", #pas obliger de le mettre si vous êtes customer
+    "product": [ # répeter autant de fois le product que vous voulez
+        "ObjectId product"
+    ],
+    "menu": [ # répeter autant de fois le menu que vous voulez
+        "ObjectId menu"
+    ],
+    "restaurant": "ObjectId restaurant"
+}
+
+Avec promotion: pas tester code a la vite mais 90% que ça marche
+J'ai du tout simplifier les promotions car sinon ça me prennait trop de temps
+
+{
+    "user": "Object Id user ", #pas obliger de le mettre si vous êtes customer
+    "product": [ # répeter autant de fois le product que vous voulez
+        "ObjectId product"
+    ],
+    "menu": [ # répeter autant de fois le menu que vous voulez
+        "ObjectId menu"
+    ],
+    "restaurant": "ObjectId restaurant",
+    "promotion": "ObjectId promotion"
+}
+
+le preparateur fait la commande
+route: GET {{URL}}commande/6282c2d75939e974357f1ee7/prepared
+{{URL}}commande/commandeID/state
+
+le livreur livre la commande
+Je sais pas si c'est fait voir avec Nicolas
+
+il parle avec le livreur
+On a pas fait que les deux marches ensemble
+Voir avec Louis
+
+client valide la commande ! pas tester code a la vite mais 90% que ça marche
+route: GET {{URL}}commande/6282c2d75939e974357f1ee7/finish
+{{URL}}commande/commandeID/state
