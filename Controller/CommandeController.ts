@@ -129,6 +129,22 @@ export class CommandeController{
                 }else{
                     throw new Error("Commande don't find");
                 }
+            }else if(req.params.state=== "finish"){
+                let commande = await CommandeService.getInstance().getById(req.params.commande_id);
+                commande.state = req.params.state;
+                if (commande){
+                    const save = await CommandeService.getInstance().UpdateOne(commande, commande._id)
+                    if (save) {
+                        commande = await CommandeService.getInstance().getById(req.params.commande_id);
+                        res.json(commande);
+                    }else {
+                        throw new Error("Commande don't find");
+                    }
+                }else{
+                    throw new Error("Commande don't find");
+                }
+            }else{
+                throw new Error("The state not existing");
             }
         }catch (err){
             res.status(400).end();
