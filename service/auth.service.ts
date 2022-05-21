@@ -94,6 +94,9 @@ export class AuthService {
             login: login
         }).exec();
     }
+    async getAlldelivery(): Promise<UserProps[]> {
+        return UserModel.find({role : 'livreur'}).exec();
+    }
 
     async  getByRestaurant(restaurandId: string | undefined): Promise<UserDocument|String|Array<String>| null >{
         let employers  = await UserModel.find({restaurant: restaurandId}).exec();
