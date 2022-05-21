@@ -25,14 +25,12 @@ const userSchema = new Schema({
             ref: "Session"
         }
     ],
-    coordStart: [
+    coordStart: 
         {
             long :Number,
             lat :Number
         }
-    ],
-
-
+    
 }, {
     collection: "users",
     timestamps: true,
@@ -46,6 +44,7 @@ export interface UserProps {
     role : string;
     restaurant?: string;
     sessions: string[] | SessionProps[];
+    coordStart: {long: number, lat:number}
 }
 
 export type UserDocument = UserProps & Document;

@@ -28,11 +28,11 @@ export class RestaurantService {
        })
        return model.save();
     }
-    public async getById(idRestaurant: string) {
+    public async getById(idRestaurant: string) : Promise<RestaurantDocument> {
         return RestaurantModel.findById(idRestaurant).exec();
     }
 
-    public async getAll() {
+    public async getAll() : Promise<RestaurantDocument[]> {
         return RestaurantModel.find().exec();
     }
     
@@ -42,10 +42,10 @@ export class RestaurantService {
     }
 
 
-    public async Update(idRestaurant: string, props: RestaurantProsp) {
+    public async Update(idRestaurant: string, props: RestaurantProsp) : Promise<RestaurantProsp | null>  {
         const restaurant = await this.getById(idRestaurant);
 
-        if (! restaurant == null) {
+        if (!restaurant) {
             return null;
         }
         if (restaurant.name !==  undefined) {

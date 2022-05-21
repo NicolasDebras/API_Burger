@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose"
+import mongoose, { Schema, Document } from "mongoose"
 import { UserProps } from "./user_model";
 import {RestaurantProsp} from "./RestaurantModel";
 
