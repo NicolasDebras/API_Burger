@@ -7,6 +7,10 @@ export interface UserProps {
     role: string;
     restaurant?: string;
     sessions: string[] | SessionProps[];
+    coordStart: {
+        long: number;
+        lat: number;
+    };
 }
 export declare type UserDocument = UserProps & Document;
 export declare const UserModel: mongoose.Model<any, {}, {}, {}>;

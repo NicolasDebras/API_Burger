@@ -38,7 +38,12 @@ class CommandeController {
             try {
                 let priceCommande = 0;
                 if (commandeBody.product || commandeBody.menu) {
-                    priceCommande = +(yield Commande_1.Commande.priceCommande(commandeBody.product, commandeBody.menu));
+                    if (commandeBody.promotion) {
+                        priceCommande = +(yield Commande_1.Commande.priceCommandePromotion(commandeBody.product, commandeBody.menu, commandeBody.promotion));
+                    }
+                    else {
+                        priceCommande = +(yield Commande_1.Commande.priceCommande(commandeBody.product, commandeBody.menu));
+                    }
                     if (!priceCommande) {
                         throw new Error("the price cannot be calculated");
                     }
@@ -156,6 +161,26 @@ class CommandeController {
                     else {
                         throw new Error("Commande don't find");
                     }
+                }
+                else if (req.params.state === "finish") {
+                    let commande = yield service_1.CommandeService.getInstance().getById(req.params.commande_id);
+                    commande.state = req.params.state;
+                    if (commande) {
+                        const save = yield service_1.CommandeService.getInstance().UpdateOne(commande, commande._id);
+                        if (save) {
+                            commande = yield service_1.CommandeService.getInstance().getById(req.params.commande_id);
+                            res.json(commande);
+                        }
+                        else {
+                            throw new Error("Commande don't find");
+                        }
+                    }
+                    else {
+                        throw new Error("Commande don't find");
+                    }
+                }
+                else {
+                    throw new Error("The state not existing");
                 }
             }
             catch (err) {

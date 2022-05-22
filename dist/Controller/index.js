@@ -19,4 +19,5 @@ __exportStar(require("../Controller/CommandeController"), exports);
 __exportStar(require("../Controller/PromotionController"), exports);
 __exportStar(require("../Controller/MenuController"), exports);
 __exportStar(require("../Controller/RestaurantService"), exports);
+__exportStar(require("../Controller/ChatController"), exports);
 //# sourceMappingURL=index.js.map

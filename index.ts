@@ -9,6 +9,7 @@ import {PromotionController} from "./Controller/PromotionController";
 import {MenuController} from "./Controller/MenuController";
 import { AuthController } from './Controller/auth.controller';
 import { IngredientController } from "./Controller/IngredientController";
+import { ChatController } from "./Controller/ChatController";
 
 async function startServer(): Promise<void> {
 
@@ -22,6 +23,9 @@ async function startServer(): Promise<void> {
 
     const productController = new ProductController();
     app.use('/product', productController.buildRoutes());
+
+    const chatController = new ChatController();
+    app.use('/chat', chatController.buildRoutes());
 
     const promotionController = new PromotionController();
     app.use('/promotion', promotionController.buildRoutes());

@@ -4,8 +4,8 @@ export declare class RestaurantService {
     static getInstance(): RestaurantService;
     private constructor();
     createRestaurant(restaurant: Partial<RestaurantProsp>): Promise<RestaurantDocument>;
-    getById(idRestaurant: string): Promise<any>;
-    getAll(): Promise<any[]>;
+    getById(idRestaurant: string): Promise<RestaurantDocument>;
+    getAll(): Promise<RestaurantDocument[]>;
     deletebyId(idRestaurant: string): Promise<boolean>;
-    Update(idRestaurant: string, props: RestaurantProsp): Promise<any>;
+    Update(idRestaurant: string, props: RestaurantProsp): Promise<RestaurantProsp | null>;
 }

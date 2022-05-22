@@ -48,12 +48,10 @@ const userSchema = new mongoose_1.Schema({
             ref: "Session"
         }
     ],
-    coordStart: [
-        {
-            long: Number,
-            lat: Number
-        }
-    ],
+    coordStart: {
+        long: Number,
+        lat: Number
+    }
 }, {
     collection: "users",
     timestamps: true,

@@ -54,7 +54,7 @@ class RestaurantService {
     Update(idRestaurant, props) {
         return __awaiter(this, void 0, void 0, function* () {
             const restaurant = yield this.getById(idRestaurant);
-            if (!restaurant == null) {
+            if (!restaurant) {
                 return null;
             }
             if (restaurant.name !== undefined) {

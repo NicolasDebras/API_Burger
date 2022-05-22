@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Document } from "mongoose";
 import { IngredientProps } from "./ingredientModel";
 import { UserProps } from "./user_model";
 export interface RestaurantProsp {
