@@ -10,6 +10,7 @@ import {MenuController} from "./Controller/MenuController";
 import { AuthController } from './Controller/auth.controller';
 import { IngredientController } from "./Controller/IngredientController";
 import { ChatController } from "./Controller/ChatController";
+import { deliveryController } from "./Controller/DeliveryController";
 
 async function startServer(): Promise<void> {
 
@@ -45,6 +46,8 @@ async function startServer(): Promise<void> {
     const ingredientController = new IngredientController();
     app.use('/ingredient', ingredientController.buildRoutes());
 
+    const deliveryController_ = new deliveryController();
+    app.use('/delivery', deliveryController_.buildRoutes());
 
     app.listen(process.env.PORT, function (){
         console.log("Server listening on port " + process.env.PORT);
