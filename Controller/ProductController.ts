@@ -31,6 +31,7 @@ export class  ProductController {
             });
             res.json(product);
         } catch (err){
+            console.log(err);
             res.status(400).end();
             return;
         }

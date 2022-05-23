@@ -12,7 +12,6 @@ const ProductSchema = new Schema({
         ingredient: {
             type: Schema.Types.ObjectId,
             ref: "Ingredient",
-            unique: true
         },
         num: {
             type: Schema.Types.Number
