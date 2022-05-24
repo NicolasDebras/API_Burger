@@ -20,7 +20,7 @@ const IngredientSchema = new Schema({
     },
     stock : {
         type: Schema.Types.Boolean,
-        required: true
+        default:true
     }
 }, {
     timestamps: true,
@@ -35,7 +35,7 @@ export interface IngredientProps {
     quantity? : number;
     id? :string;
     ingredient? : IngredientProps;
-    stock: boolean;
+    stock?: boolean;
 }
 
 export type IngredientDocument = IngredientProps & Document;

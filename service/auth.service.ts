@@ -39,7 +39,8 @@ export class AuthService {
                     login: user.login,
                     password: SecurityUtils.sha512(user.password),
                     role: user.role,
-                    restaurant: user.restaurant
+                    restaurant: user.restaurant,
+                    coordStart: user.coordStart
                 });
                 return model.save();
             }
@@ -101,5 +102,17 @@ export class AuthService {
     async  getByRestaurant(restaurandId: string | undefined): Promise<UserDocument|String|Array<String>| null >{
         let employers  = await UserModel.find({restaurant: restaurandId}).exec();
         return  employers
+    }
+
+    async updateById(User_id: string, props: UserProps): Promise<UserDocument | null> {
+        const User = await this.getById(User_id);
+        if(!User){
+            return null;
+        }
+        if (props.coordStart !== undefined ){
+                User.coordStart = props.coordStart; 
+        }
+        const res = await User.save();
+        return res;
     }
 }

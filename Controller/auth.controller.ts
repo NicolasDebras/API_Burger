@@ -64,6 +64,20 @@ export class AuthController {
         }
     }
 
+    async updateUser(req: Request, res: Response){
+        try {
+            const user = await AuthService.getInstance()
+                .updateById(req.params.User_id, req.body);
+            if(!user){
+                res.status(404).end();
+                return;
+            }
+            res.json(user);
+        }catch (err){
+            res.status(400).end();
+        }
+    }
+
     async me(req: Request, res: Response) {
         res.json(req.user);
     }
@@ -75,6 +89,7 @@ export class AuthController {
         router.post('/subscribe',  express.json(), this.createUser.bind(this));
         router.post('/login', express.json(), this.logUser.bind(this)); 
         router.get('/me', checkUserConnected(), this.me.bind(this));
+        router.put('/update/:User_id', express.json(), this.updateUser.bind(this));
         return router;
     }
 }
