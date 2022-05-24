@@ -13,16 +13,16 @@ export class AuthController {
         if (connected?.role !== undefined){
             let result = await verifAuth.verifCreate(connected.role, req.body.role);
             if (result == 1){
-                throw  new Error("user don\'t have right for create user ");
+                throw  new Error("user don\'t have right to create user ");
             }
         }
 
         if (!req.body.role || ( this.role.indexOf(req.body.role) && req.body.role !== "customer")){
             req.body.role = "customer";
         }
-        if (req.body.restaurant){
+        /*if (req.body.restaurant){
             verifAuth.cordonateUser(req.body.role, req.body.restaurant, req);
-        }
+        }*/
 
 
         try {

@@ -26,7 +26,7 @@ export class CommandeService{
     public async createCommande(props: CommandeProsp): Promise<CommandeDocument>{
         let test = await  Product.enoughIngredient(props);
         if(test?.size == 0){
-            throw new Error("Error commande");
+            throw new Error("Erreur ingrédient");
         }
         let max = 7000000;
         let min = 1;

@@ -116,6 +116,7 @@ export class CommandeController{
                                 if (result){
                                     commande = await CommandeService.getInstance().getById(req.params.commande_id);
                                     if(!commande){
+                                        
                                         res.status(404).end();
                                         return;
                                     }
@@ -151,6 +152,7 @@ export class CommandeController{
                 throw new Error("The state not existing");
             }
         }catch (err){
+            console.log(err);
             res.status(400).end();
         }
     }
