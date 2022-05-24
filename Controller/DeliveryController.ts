@@ -11,9 +11,15 @@ export class deliveryController {
     async DeliveryFind(req: Request, res: Response) {
 
         const rest = await RestaurantService.getInstance().getById(req.params.id_rest);
+        if (!rest)
+            return res.status(400)
+        
         const AllUser =  await AuthService.getInstance().getAlldelivery();
 
-        let CordDeliveryMan : [number, number][] = [[0, 0]]
+        if (!AllUser)
+            return res.status(400)
+
+        let CordDeliveryMan : [number, number][] = []
         
         for (let i = 0; i != AllUser.length ;i++) { 
             CordDeliveryMan.fill([AllUser[i].coordStart['lat'] * (Math.PI/180) , AllUser[i].coordStart['long'] * (Math.PI/180)])
