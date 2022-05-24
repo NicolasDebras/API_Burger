@@ -16,10 +16,6 @@ export class AuthController {
                 throw  new Error("user don\'t have right to create user ");
             }
         }
-
-        if (!req.body.role || ( this.role.indexOf(req.body.role) && req.body.role !== "customer")){
-            req.body.role = "customer";
-        }
         /*if (req.body.restaurant){
             verifAuth.cordonateUser(req.body.role, req.body.restaurant, req);
         }*/
@@ -28,6 +24,8 @@ export class AuthController {
         try {
             let user;
             if (req.body.restaurant){
+                console.log(req.body);
+                
                 user = await AuthService.getInstance().subscribeUser({
                     login: req.body.login,
                     password: req.body.password,
